@@ -14,6 +14,8 @@ import { demoReducer } from '../redux/reducer/index.reducer.js'
 import Article from './Article'
 import Record from './Record'
 import User from './User'
+import FooterTabs from '../components/FooterTabs'
+
 
 
 
@@ -24,14 +26,21 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
-          <Switch>
-            <Route path='/' exact component={Article} />
-            <Route path='/record' component={Record} />
-            <Route path='/user' component={User} />
-            <Redirect to="/" />
-          </Switch>
-        </BrowserRouter>
+        <div>
+          <BrowserRouter>
+            <div>
+              <div>header</div>
+              <Switch>
+                <Route path='/' exact component={Article} />
+                <Route path='/record' component={Record} />
+                <Route path='/user' component={User} />
+                <Redirect to="/" />
+              </Switch>
+              <FooterTabs />
+            </div>
+          </BrowserRouter>
+        </div>
+
       </Provider>
 
     )
