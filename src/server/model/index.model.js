@@ -5,7 +5,7 @@ const models = {
         name: {
             type: String, require: true,
         },
-        age: {
+        password: {
             type: String, require: true,
         },
         record: {

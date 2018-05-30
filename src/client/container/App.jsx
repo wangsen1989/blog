@@ -7,9 +7,11 @@ import { BrowserRouter, HashRouter, Route, Switch, Redirect } from 'react-router
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import { hot } from 'react-hot-loader'
+import { composeWithDevTools } from 'redux-devtools-extension';
+
 import 'antd-mobile/dist/antd-mobile.css'
 
-import { demoReducer } from '../redux/reducer/index.reducer.js'
+import * as reducers from '../redux/reducer/index.reducer.js'
 
 import Article from './Article'
 import Record from './Record'
@@ -19,8 +21,7 @@ import FooterTabs from '../components/FooterTabs'
 
 
 
-
-const store = createStore(combineReducers({ demoReducer }), applyMiddleware(thunk, logger))
+const store = createStore(combineReducers(reducers), composeWithDevTools(applyMiddleware(thunk, logger)))
 
 class App extends React.Component {
   render() {

@@ -28,7 +28,14 @@ module.exports = {
                 include: path.join(__dirname, './src'),
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015', "stage-3"]
+                    presets: ['react', 'es2015', "stage-3"],
+                    plugins: [
+                        "transform-runtime",
+                        "react-hot-loader/babel",
+                        ["import", { libraryName: "antd-mobile", style: "css" }],
+                        "transform-decorators-legacy",
+                        "transform-class-properties",
+                    ],
                 }
             },
             {

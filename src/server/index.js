@@ -2,6 +2,8 @@ const fs = require('fs')
 const http = require('http')
 const path = require('path')
 const mongooose = require('mongoose')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const express = require('express')
 const app = express()
 const Router = require('./router/index.router')
@@ -11,6 +13,9 @@ mongooose.connect(DB_URL)
 mongooose.connection.on('connected', () => {
     console.log("db connected")
 })
+
+app.use(bodyParser.json())
+app.use(cookieParser())
 
 app.use(express.static(path.join(__dirname, '../../dist')))
 

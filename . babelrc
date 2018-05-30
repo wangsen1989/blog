@@ -9,5 +9,6 @@
         "react-hot-loader/babel",
         ["import", { libraryName: "antd-mobile", style: "css" }],
         "transform-decorators-legacy",
+        "transform-class-properties",
     ],
 }

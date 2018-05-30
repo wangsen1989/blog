@@ -25,6 +25,13 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015', 'stage-3'],
+                    plugins: [
+                        "transform-runtime",
+                        "react-hot-loader/babel",
+                        ["import", { libraryName: "antd-mobile", style: "css" }],
+                        "transform-decorators-legacy",
+                        "transform-class-properties",
+                    ],
                 }
             },
             {
