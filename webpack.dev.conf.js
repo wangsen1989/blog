@@ -24,11 +24,20 @@ module.exports = {
                 include: path.join(__dirname, './src/client'),
                 loader: 'babel-loader',
                 query: {
-                    presets: ['react', 'es2015', 'stage-3']
+                    presets: ['react', 'es2015', 'stage-3'],
                 }
             },
             {
-                test: /\.(css|less)$/,
+                test: /\.css|less$/,
+                include: path.join(__dirname, './node_modules'),
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ],
+            },
+            {
+                test: /\.css|less$/,
                 include: path.join(__dirname, './src/client'),
                 use: [
                     'style-loader',
@@ -42,7 +51,7 @@ module.exports = {
                             sourceMap: true,
                         }
                     },
-                    'less-loader'
+                    'less-loader',
                 ],
             },
             {

@@ -1,8 +1,10 @@
 import React from 'react'
 import { connect } from "react-redux"
 import axios from 'axios'
+import { Button } from 'antd-mobile';
 
 // import { demoAction } from '../../redux/action/demo.action'
+import style from './app.less'
 
 
 class User extends React.Component {
@@ -12,7 +14,8 @@ class User extends React.Component {
   render() {
     return (
       <div>
-        this  is  User
+        <h3 className={style.test}>this  is  User!</h3>
+        <Button type="primary">点击</Button>
       </div>
     )
   }

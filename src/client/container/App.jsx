@@ -7,14 +7,14 @@ import { BrowserRouter, HashRouter, Route, Switch, Redirect } from 'react-router
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import { hot } from 'react-hot-loader'
+import 'antd-mobile/dist/antd-mobile.css'
+
+import { demoReducer } from '../redux/reducer/index.reducer.js'
 
 import Article from './Article'
 import Record from './Record'
 import User from './User'
 
-import style from './app.less'
-
-import { demoReducer } from '../redux/reducer/index.reducer.js'
 
 
 

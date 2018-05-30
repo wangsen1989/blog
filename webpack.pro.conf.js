@@ -16,6 +16,11 @@ module.exports = {
         publicPath: '/', //pro
         chunkFilename: "script/[name].[chunkHash:8].chunk.js", // chunk业务包，第三方包，不是hash，必须是chunkHash，才长效缓存
     },
+    resolve: {
+        extensions: ['.js', '.jsx', '.json'],
+        alias: {
+        }
+    },
     module: {
         rules: [
             {
@@ -25,6 +30,15 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015', "stage-3"]
                 }
+            },
+            {
+                test: /\.css|less$/,
+                include: path.join(__dirname, './node_modules'),
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ],
             },
             {
                 test: /\.(css|less)$/,
