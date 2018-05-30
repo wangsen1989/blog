@@ -8,5 +8,6 @@
         "transform-runtime", 
         "react-hot-loader/babel",
         ["import", { libraryName: "antd-mobile", style: "css" }],
+        "transform-decorators-legacy",
     ],
 }
