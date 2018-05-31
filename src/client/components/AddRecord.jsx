@@ -37,8 +37,8 @@ class AddRecord extends React.Component {
         const { getFieldProps } = this.props.form;
         const { title, content } = this.state;
         return (
-            <List renderHeader={() => '账户不存在将自动注册'}>
-
+            <List>
+                <WhiteSpace/>
                 <InputItem
                     {...getFieldProps('title')}
                     type="text"
