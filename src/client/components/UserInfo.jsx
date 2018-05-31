@@ -7,7 +7,6 @@ import cookie from 'react-cookies'
 import { logOut, getUserInfo } from '../redux/action/user.action';
 
 const Item = List.Item
-// const Brief = Item.Brief
 
 @connect(
     state => ({
@@ -20,10 +19,6 @@ const Item = List.Item
 class UserInfo extends React.Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //     name: '',
-        //     record: []
-        // }
         this.handleLogOut = this.handleLogOut.bind(this)
     }
     componentDidMount() {
@@ -31,7 +26,7 @@ class UserInfo extends React.Component {
             // 用户刷新操作，reducer登录标志丢失，需要重新拉取
             this.props.getUserInfo({ _id: cookie.load('userid'), name: cookie.load('username') })
                 .catch(err => {
-                    // debugger
+                    // console.log(err)
                 })
         }
     }

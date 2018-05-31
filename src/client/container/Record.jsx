@@ -21,9 +21,6 @@ class Record extends React.Component {
     super(props)
     this.handleAddRecord = this.handleAddRecord.bind(this)
   }
-  componentDidMount() {
-    // this.props.demoAction({ name: 'wangsen' })
-  }
   handleAddRecord() {
     this.props.changeMyListVisible(false)
   }
