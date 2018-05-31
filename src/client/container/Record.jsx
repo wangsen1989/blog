@@ -9,7 +9,7 @@ import AddRecord from '../components/AddRecord'
 import { changeMyListVisible } from '../redux/action/record.action'
 
 @connect(
-  state=>({
+  state => ({
     listVisibel: state.recordReducer.get('listVisibel'),
   }),
   {
@@ -32,15 +32,19 @@ class Record extends React.Component {
     return (
       <div>
 
-        <Item
-          extra={<img
-            style={{ width: 25 }}
-            src={require('../components/assets/images/addRecord.png')}
-            onClick={this.handleAddRecord}
-          />}
-          multipleLine>
-          共n篇
-        </Item>
+        {
+          this.props.listVisibel ?
+            <Item
+              extra={<img
+                style={{ width: 25 }}
+                src={require('../components/assets/images/addRecord.png')}
+                onClick={this.handleAddRecord}
+              />}
+              multipleLine>
+              共n篇
+            </Item>
+            : null
+        }
 
         {
           this.props.listVisibel ? <div>记录列表</div> : <AddRecord />
