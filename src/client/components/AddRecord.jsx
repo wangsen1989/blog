@@ -38,7 +38,7 @@ class AddRecord extends React.Component {
                         {...getFieldProps('content', {
                             initialValue: '',
                         })}
-                        rows={14}
+                        rows={10}
                     // count={10000}
                     />
                 </List>
