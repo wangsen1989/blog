@@ -1,11 +1,13 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { Switch, Button, List, InputItem, WhiteSpace } from 'antd-mobile';
+import { Switch, Button, List, InputItem, WhiteSpace, } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import cookie from 'react-cookies'
 import { logOut, getUserInfo } from '../redux/action/user.action';
 
+const Item = List.Item
+// const Brief = Item.Brief
 
 @connect(
     state => ({
@@ -40,12 +42,16 @@ class UserInfo extends React.Component {
     }
     render() {
         const { getFieldProps } = this.props.form;
-        const { name, record } = this.props.userInfo.toJS();
+        const { name = '', record = [] } = this.props.userInfo.toJS();
         return (
             <List renderHeader={() => '个人资料'}>
 
                 <WhiteSpace />
-                <p>{name}</p>
+                <Item extra={name}>账号</Item>
+                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>关注</Item>
+                <Item extra={0}  arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item>
+                <Item extra={record.length || 0}  arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item>
+                <Item extra={0}  arrow="horizontal" multipleLine onClick={() => { }}>我的评价</Item>
                 <WhiteSpace />
                 <Button
                     type="primary"
