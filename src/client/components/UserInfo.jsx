@@ -27,7 +27,10 @@ class UserInfo extends React.Component {
     componentDidMount() {
         if (cookie.load('userid') && !this.props.loginStatus) {
             // 用户刷新操作，reducer登录标志丢失，需要重新拉取
-            this.props.getUserInfo({ _id: cookie.load('userid'), name: cookie.load('username') })
+            this.props.getUserInfo({ _id: cookie.load('userid'), name: cookie.load('username2') })
+                .catch(err => {
+                    // debugger
+                })
         }
     }
 

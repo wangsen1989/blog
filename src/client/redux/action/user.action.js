@@ -25,13 +25,14 @@ export const login = (opts) => {
 
 export const getUserInfo = (opts) => {
     return dispatch => {
-        axiosData('./api/userInfo', opts)
+        return axiosData('./api/userInfo', opts)
             .then(res => {
                 const { data = {} } = res
                 dispatch(lodUserInfo(data))
+                return Promise.resolve(data)
             })
             .catch(err => {
-                console.log(err)
+                return Promise.reject(err)
             })
     }
 }
