@@ -1,6 +1,7 @@
 import Axios from "axios";
 
 export const LOGIN_SUCCESS = 'login success'
+export const LOGOUT = 'logout'
 
 export const login = (opts) => {
     return dispatch => {
@@ -9,9 +10,19 @@ export const login = (opts) => {
             if (res.data.code = '000') {
                 dispatch({
                     type: LOGIN_SUCCESS,
-                    payload: true,
+                    payload: res.data.data,
                 })
             }
+        })
+    }
+}
+
+
+export const logOut = () => {
+    return dispatch => {
+        dispatch({
+            type: LOGOUT,
+            // payload: res.data.data,
         })
     }
 }

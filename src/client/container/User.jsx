@@ -5,6 +5,7 @@ import axios from 'axios'
 import { Button } from 'antd-mobile';
 
 import Login from '../components/Login'
+import UserInfo from '../components/UserInfo'
 import style from './app.less'
 
 @connect(
@@ -27,7 +28,7 @@ class User extends React.Component {
         if (!userid) {
             return <Login />
         }
-        return <h3>登陆成功，用户资料页面</h3>
+        return <UserInfo/>
     }
 }
 
