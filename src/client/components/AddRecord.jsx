@@ -3,12 +3,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Button, List, InputItem, WhiteSpace } from 'antd-mobile';
 import { createForm } from 'rc-form';
-import { login } from '../redux/action/user.action';
+import { changeMyListVisible } from '../redux/action/record.action'
 
 @connect(
     null,
     {
-        login,
+        changeMyListVisible,
     }
 )
 
@@ -31,7 +31,7 @@ class AddRecord extends React.Component {
     }
     submit() {
         console.log(this.state)
-        this.props.onChange()
+        this.props.changeMyListVisible(true)
     }
     render() {
         const { getFieldProps } = this.props.form;

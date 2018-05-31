@@ -6,27 +6,26 @@ import { Icon, Card, WhiteSpace, Modal, List } from 'antd-mobile';
 const Item = List.Item
 
 import AddRecord from '../components/AddRecord'
-// import { demoAction } from '../../redux/action/demo.action'
+import { changeMyListVisible } from '../redux/action/record.action'
 
-
+@connect(
+  state=>({
+    listVisibel: state.recordReducer.get('listVisibel'),
+  }),
+  {
+    changeMyListVisible
+  }
+)
 class Record extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      listVisibel: true
-    }
-
     this.handleAddRecord = this.handleAddRecord.bind(this)
-    this.handleVisibel = this.handleVisibel.bind(this)
   }
   componentDidMount() {
     // this.props.demoAction({ name: 'wangsen' })
   }
   handleAddRecord() {
-    this.setState({ listVisibel: false })
-  }
-  handleVisibel() {
-    this.setState({ listVisibel: true })
+    this.props.changeMyListVisible(false)
   }
   render() {
 
@@ -44,7 +43,7 @@ class Record extends React.Component {
         </Item>
 
         {
-          this.state.listVisibel ? <div>记录列表</div> : <AddRecord onChange={this.handleVisibel} />
+          this.props.listVisibel ? <div>记录列表</div> : <AddRecord />
         }
 
       </div >
@@ -52,14 +51,4 @@ class Record extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    // list: state.demoReducer.get('list'),
-  }
-}
-function mapDispachToProps(dispatch) {
-  return {
-    // demoAction,
-  }
-}
-export default connect(mapStateToProps, mapDispachToProps)(Record)
+export default Record;

@@ -1,4 +1,3 @@
-import Axios from "axios";
 import axiosData from "../../utils/axiosData";
 
 export const LOAD_USER_INFO = 'load user info'
