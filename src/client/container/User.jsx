@@ -19,7 +19,6 @@ class User extends React.Component {
         super(props)
         this.state = { userid: cookie.load('userid') }
     }
-
     componentWillReceiveProps(nextProps) {
         this.setState({ userid: cookie.load('userid') })
     }

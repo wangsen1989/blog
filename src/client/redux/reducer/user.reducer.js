@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { LOGIN_SUCCESS, LOGOUT } from '../action/user.action'
+import { LOAD_USER_INFO, LOGOUT } from '../action/user.action'
 
 const $$initialState = Immutable.fromJS({
     loginStatus: false,
@@ -14,7 +14,7 @@ const userReducer = ($$state = $$initialState, action) => {
 
     switch (action.type) {
 
-        case LOGIN_SUCCESS:
+        case LOAD_USER_INFO:
             return $$state.set('loginStatus', true).mergeIn(['userInfo'], action.payload)
 
         case LOGOUT:
