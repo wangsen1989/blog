@@ -9,6 +9,7 @@ import { logOut, getUserInfo } from '../redux/action/user.action';
 
 @connect(
     state => ({
+        loginStatus: state.userReducer.get('loginStatus'),
         userInfo: state.userReducer.get('userInfo')
     }),
     { logOut, getUserInfo }
@@ -23,10 +24,10 @@ class UserInfo extends React.Component {
         // }
         this.handleLogOut = this.handleLogOut.bind(this)
     }
-    componentDidMount(){
-        if(cookie.load('userid') && !this.props.userInfo.toJS().name ){
-            // 用户刷新操作，info状态丢失，需要重新拉取
-            this.props.getUserInfo({_id: cookie.load('userid'),name: cookie.load('username')})
+    componentDidMount() {
+        if (cookie.load('userid') && !this.props.loginStatus) {
+            // 用户刷新操作，reducer登录标志丢失，需要重新拉取
+            this.props.getUserInfo({ _id: cookie.load('userid'), name: cookie.load('username') })
         }
     }
 
