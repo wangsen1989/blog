@@ -16,6 +16,7 @@ import * as reducers from '../redux/reducer/index.reducer.js'
 import Article from './Article'
 import Record from './Record'
 import User from './User'
+import NavHeader from '../components/NavHeader'
 import FooterTabs from '../components/FooterTabs'
 
 
@@ -30,7 +31,7 @@ class App extends React.Component {
         <div>
           <BrowserRouter>
             <div>
-              <div>header</div>
+              <NavHeader />
               <Switch>
                 <Route path='/' exact component={Article} />
                 <Route path='/record' component={Record} />
