@@ -44,9 +44,7 @@ class UserInfo extends React.Component {
         const { getFieldProps } = this.props.form;
         const { name = '', record = [] } = this.props.userInfo.toJS();
         return (
-            <List renderHeader={() => '个人资料'}>
-
-                <WhiteSpace />
+            <List>
                 <Item extra={name}>账号</Item>
                 <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>关注</Item>
                 <Item extra={0}  arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item>
