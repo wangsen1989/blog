@@ -4,15 +4,9 @@ import { TabBar } from 'antd-mobile';
 import style from './style.less';
 
 class FooterTabs extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedTab: 'article',
-    };
-  }
 
   render() {
-    console.log(this.props)
+    const { pathname = '/' } = this.props.location
     return (
       <div className={style.footerTabs}>
         <TabBar
@@ -25,11 +19,8 @@ class FooterTabs extends React.Component {
             selectedIcon={{ uri: require('./assets/images/article_select.png') }}
             title="文章"
             key="article"
-            selected={this.state.selectedTab === 'article'}
+            selected={pathname === '/article' || pathname === '/'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'article',
-              });
               this.props.history.push('/article')
             }}
           />
@@ -38,11 +29,8 @@ class FooterTabs extends React.Component {
             selectedIcon={{ uri: require('./assets/images/record_select.png') }}
             title="记录"
             key="record"
-            selected={this.state.selectedTab === 'record'}
+            selected={pathname === '/record'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'record',
-              });
               this.props.history.push('/record')
             }}
           />
@@ -51,11 +39,8 @@ class FooterTabs extends React.Component {
             selectedIcon={{ uri: require('./assets/images/user_select.png') }}
             title="我"
             key="user"
-            selected={this.state.selectedTab === 'user'}
+            selected={pathname === '/user'}
             onPress={() => {
-              this.setState({
-                selectedTab: 'user',
-              });
               this.props.history.push('/user')
             }}
           />
