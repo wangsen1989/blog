@@ -12,10 +12,13 @@ const lodUserInfo = (payload) => ({
 
 export const login = (opts) => {
     return dispatch => {
-        axiosData('./api/user', opts).then(res => {
-            console.log(res.data)
-            dispatch(lodUserInfo(res.data))
-        })
+        axiosData('./api/user', opts)
+            .then(res => {
+                dispatch(lodUserInfo(res.data))
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }
 
@@ -26,6 +29,9 @@ export const getUserInfo = (opts) => {
             .then(res => {
                 const { data = {} } = res
                 dispatch(lodUserInfo(data))
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 }

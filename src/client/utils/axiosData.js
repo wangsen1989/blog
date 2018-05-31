@@ -13,7 +13,7 @@ const axiosData = (api, params) => {
         })
         .catch(error => {
             Toast.fail(error.message || '出错了，请稍后重试！', 2)
-            // return Promise.resolve(error);
+            return Promise.reject(error);
         });
 }
 export default axiosData;
