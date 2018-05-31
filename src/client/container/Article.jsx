@@ -2,13 +2,14 @@ import React from 'react'
 import { connect } from "react-redux"
 import axios from 'axios'
 
-// import { demoAction } from '../../redux/action/demo.action'
+@connect(
+  null,
+  {
 
-
-class Article extends React.Component {
-  componentDidMount() {
-    // this.props.demoAction({ name: 'wangsen' })
   }
+)
+class Article extends React.Component {
+
   render() {
     return (
       <div>
@@ -18,14 +19,4 @@ class Article extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    // list: state.demoReducer.get('list'),
-  }
-}
-function mapDispachToProps(dispatch) {
-  return {
-    // demoAction,
-  }
-}
-export default connect(mapStateToProps, mapDispachToProps)(Article)
+export default Article
