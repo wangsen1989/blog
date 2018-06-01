@@ -22,10 +22,12 @@ class AddRecord extends React.Component {
     }
     submit() {
         const { title = '', content = '' } = this.props.form.getFieldsValue()
-        this.props.addRecord({ title, content }).then(res => {
-            this.props.getUserInfo()
-            this.props.changeMyListVisible(true)
-        })
+        this.props.addRecord({ title, content })
+            .then(res => {
+                this.props.getUserInfo()
+                this.props.changeMyListVisible(true)
+            })
+            .catch(err => console.log(err))
     }
     render() {
         const { getFieldProps } = this.props.form;
