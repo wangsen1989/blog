@@ -16,11 +16,12 @@ export const changeMyListVisible = (opts) => {
 
 export const addRecord = (opts) => {
     return dispatch => {
-        axiosData('/api/addRecord', opts)
+        return axiosData('/api/addRecord', opts)
             .then(res => {
                 console.log(res)
+                return Promise.resolve()
             })
-            .catch(err => console.log(err))
+            .catch(err => Promise.reject())
     }
 }
 

@@ -4,12 +4,14 @@ import { connect } from 'react-redux'
 import { Switch, Button, List, InputItem, WhiteSpace, TextareaItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import { changeMyListVisible, addRecord } from '../redux/action/record.action'
+import { getUserInfo } from '../redux/action/user.action'
 
 @connect(
     null,
     {
         changeMyListVisible,
         addRecord,
+        getUserInfo,
     }
 )
 
@@ -20,9 +22,10 @@ class AddRecord extends React.Component {
     }
     submit() {
         const { title = '', content = '' } = this.props.form.getFieldsValue()
-        console.log(this.props.form.getFieldsValue())
-        this.props.addRecord({ title, content })
-        this.props.changeMyListVisible(true)
+        this.props.addRecord({ title, content }).then(res => {
+            this.props.getUserInfo()
+            this.props.changeMyListVisible(true)
+        })
     }
     render() {
         const { getFieldProps } = this.props.form;
