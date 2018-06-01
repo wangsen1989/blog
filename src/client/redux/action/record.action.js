@@ -18,7 +18,6 @@ export const addRecord = (opts) => {
     return dispatch => {
         return axiosData('/api/addRecord', opts)
             .then(res => {
-                console.log(res)
                 return Promise.resolve()
             })
             .catch(err => Promise.reject())

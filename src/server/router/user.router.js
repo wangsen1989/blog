@@ -9,18 +9,23 @@ const userRouter = (Router) => {
 
     Router.post('/user', (req, res) => {
         const { name, password } = req.body;
-        User.findOne({ name, password }, utils.responseFilter, (err, doc) => {
+        const md5Pwd = utils.secretSault(password);
+        User.findOne({ name, password: md5Pwd }, utils.responseFilter, (err, doc) => {
             if (err) {
                 res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
             }
             else {
                 if (doc) {
-                    res.cookie('userid', doc._id.toString())
+                    const _id = doc._id.toString()
+                    res.cookie('userid', _id)
+                    res.cookie('accessToken', utils.secretSault(_id))
                     res.cookie('username', doc.name)
                     res.json({ code: '000', data: doc })
                 } else {
-                    User.create({ name, password }, utils.responseFilter, (error, document) => {
-                        res.cookie('userid', document._id.toString())
+                    User.create({ name, password: md5Pwd }, utils.responseFilter, (error, document) => {
+                        const _id = document._id.toString()
+                        res.cookie('userid', _id)
+                        res.cookie('accessToken', utils.secretSault(_id))
                         res.cookie('username', document.name)
                         res.json({ code: '000', data: document })
                     })
