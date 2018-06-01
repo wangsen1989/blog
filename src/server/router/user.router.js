@@ -22,12 +22,13 @@ const userRouter = (Router) => {
                     res.cookie('username', doc.name)
                     res.json({ code: '000', data: doc })
                 } else {
-                    User.create({ name, password: md5Pwd }, utils.responseFilter, (error, document) => {
+                    User.create({ name, password: md5Pwd }, {password:0}, (error, document) => {
                         const _id = document._id.toString()
+                        const {password,...otherDoc}= document._doc
                         res.cookie('userid', _id)
                         res.cookie('accessToken', utils.secretSault(_id))
                         res.cookie('username', document.name)
-                        res.json({ code: '000', data: document })
+                        res.json({ code: '000', data: otherDoc })
                     })
                 }
             }

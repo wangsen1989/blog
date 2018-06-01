@@ -1,3 +1,4 @@
+import pwdSault from "../../utils/pwdSault";
 import axiosData from "../../utils/axiosData";
 
 export const LOAD_USER_INFO = 'load user info'
@@ -11,7 +12,8 @@ const lodUserInfo = (payload) => ({
 
 export const login = (opts) => {
     return dispatch => {
-        axiosData('./api/user', opts)
+        const { name, password } = opts
+        axiosData('./api/user', { name, password: pwdSault(password) })
             .then(res => {
                 dispatch(lodUserInfo(res.data))
             })
