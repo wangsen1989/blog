@@ -8,12 +8,15 @@ const models = {
         password: {
             type: String, require: true,
         },
-        record: {
+        records: {
             type: Array,
         }
     },
     record: {
-        name: {
+        username: {
+            type: String, require: true,
+        },
+        userid: {
             type: String, require: true,
         },
         title: {

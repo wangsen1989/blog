@@ -3,12 +3,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Button, List, InputItem, WhiteSpace, TextareaItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
-import { changeMyListVisible } from '../redux/action/record.action'
+import { changeMyListVisible, addRecord } from '../redux/action/record.action'
 
 @connect(
     null,
     {
         changeMyListVisible,
+        addRecord,
     }
 )
 
@@ -18,7 +19,9 @@ class AddRecord extends React.Component {
         this.submit = this.submit.bind(this)
     }
     submit() {
+        const { title = '', content = '' } = this.props.form.getFieldsValue()
         console.log(this.props.form.getFieldsValue())
+        this.props.addRecord({ title, content })
         this.props.changeMyListVisible(true)
     }
     render() {

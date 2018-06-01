@@ -1,16 +1,15 @@
 const mongoose = require('mongoose')
 const model = require('../model/index.model')
 const User = model.getModel('user')
-const _FILTER = {
-    password:0,
-}
+const utils = require('../utils')
+
 
 const userRouter = (Router) => {
 
 
     Router.post('/user', (req, res) => {
         const { name, password } = req.body;
-        User.findOne({ name, password }, _FILTER, (err, doc) => {
+        User.findOne({ name, password }, utils.responseFilter, (err, doc) => {
             if (err) {
                 res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
             }
@@ -20,7 +19,7 @@ const userRouter = (Router) => {
                     res.cookie('username', doc.name)
                     res.json({ code: '000', data: doc })
                 } else {
-                    User.create({ name, password }, _FILTER, (error, document) => {
+                    User.create({ name, password }, utils.responseFilter, (error, document) => {
                         res.cookie('userid', document._id.toString())
                         res.cookie('username', document.name)
                         res.json({ code: '000', data: document })
@@ -34,7 +33,7 @@ const userRouter = (Router) => {
         let { name, _id } = req.body;
         _id = mongoose.mongo.ObjectId(_id); 
 
-        User.findOne({ name, _id }, _FILTER, (err, doc) => {
+        User.findOne({ name, _id }, utils.responseFilter, (err, doc) => {
             if (err) {
                 res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
             }
