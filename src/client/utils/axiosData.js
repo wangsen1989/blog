@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { Toast } from 'antd-mobile';
 
-const axiosData = (api, params) => {
+const axiosData = (api, params = {}) => {
 
     return Axios.post(api, params)
         .then(json => {

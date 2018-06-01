@@ -21,10 +21,6 @@ export const addRecord = (opts) => {
                 console.log(res)
             })
             .catch(err => console.log(err))
-        // dispatch({
-        //     type: ADD_RECORD,
-        //     payload:opts,
-        // })
     }
 }
 

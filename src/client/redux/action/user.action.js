@@ -22,9 +22,9 @@ export const login = (opts) => {
 }
 
 
-export const getUserInfo = (opts) => {
+export const getUserInfo = () => {
     return dispatch => {
-        return axiosData('./api/userInfo', opts)
+        return axiosData('./api/userInfo')
             .then(res => {
                 const { data = {} } = res
                 dispatch(lodUserInfo(data))

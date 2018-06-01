@@ -30,19 +30,13 @@ const userRouter = (Router) => {
     })
 
     Router.post('/userInfo', (req, res) => {
-        let { name, _id } = req.body;
-        _id = mongoose.mongo.ObjectId(_id); 
-
-        User.findOne({ name, _id }, utils.responseFilter, (err, doc) => {
+        let { userid = '' } = req.cookies;
+        User.findById(userid, utils.responseFilter, (err, doc) => {
             if (err) {
                 res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
             }
             else {
-                if (doc) {
-                    res.json({ code: '000', data: doc })
-                } else {
-                    res.json({ code: '001', message: '非法操作，请登录后再试' })
-                }
+                res.json({ code: '000', data: doc })
             }
         })
     })

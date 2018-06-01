@@ -23,11 +23,8 @@ class UserInfo extends React.Component {
     }
     componentDidMount() {
         if (cookie.load('userid') && !this.props.loginStatus) {
-            // 用户刷新操作，reducer登录标志丢失，需要重新拉取
-            this.props.getUserInfo({ _id: cookie.load('userid'), name: cookie.load('username') })
-                .catch(err => {
-                    // console.log(err)
-                })
+            // 用户刷新操作，有cookie，但reducer登录标志丢失，需要重新拉取
+            this.props.getUserInfo()
         }
     }
 
@@ -42,9 +39,9 @@ class UserInfo extends React.Component {
             <List>
                 <Item extra={name}>账号</Item>
                 <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>关注</Item>
-                <Item extra={0}  arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item>
-                <Item extra={record.length || 0}  arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item>
-                <Item extra={0}  arrow="horizontal" multipleLine onClick={() => { }}>我的评价</Item>
+                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item>
+                <Item extra={record.length || 0} arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item>
+                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>我的评价</Item>
                 <WhiteSpace />
                 <Button
                     type="primary"
