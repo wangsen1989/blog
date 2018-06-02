@@ -1,6 +1,10 @@
 import React from 'react'
 import { connect } from "react-redux"
+import ArticleListView from "../components/ArticleListView"
 import { getArticles } from '../redux/action/article.action'
+
+
+
 
 @connect(
   state => ({
@@ -13,13 +17,13 @@ import { getArticles } from '../redux/action/article.action'
 class Article extends React.Component {
   componentDidMount() {
     console.log("componentDidMount");
-    this.props.getArticles()
+    // this.props.getArticles()
   }
   render() {
     const articles = this.props.$$articles.toJS()
     return (
       <div>
-        {
+        {/* {
           articles.map(art => (
             <div key={art._id}>
               <p>{art.name}</p>
@@ -27,8 +31,8 @@ class Article extends React.Component {
               <p>{art.content}</p>
             </div>
           ))
-
-        }
+        } */}
+        <ArticleListView />
       </div>
     )
   }
