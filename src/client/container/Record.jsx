@@ -9,6 +9,7 @@ import AddRecord from '../components/AddRecord'
 import MyRecordsList from '../components/MyRecordsList'
 
 import { changeMyListVisible } from '../redux/action/record.action'
+import style from './app.less'
 
 @connect(
   state => ({
@@ -36,6 +37,7 @@ class Record extends React.Component {
         {
           this.props.listVisibel ?
             <Item
+              className={style.recordsCount}
               extra={<img
                 style={{ width: 25 }}
                 src={require('../components/assets/images/addRecord.png')}

@@ -3,7 +3,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Button, List, InputItem, WhiteSpace, TextareaItem } from 'antd-mobile';
 import { changeMyListVisible, addRecord, recordingArticle } from '../redux/action/record.action'
-import { getUserInfo } from '../redux/action/user.action'
 
 @connect(
     state => ({
@@ -12,7 +11,6 @@ import { getUserInfo } from '../redux/action/user.action'
     {
         changeMyListVisible,
         addRecord,
-        getUserInfo,
         recordingArticle,
     }
 )
@@ -34,7 +32,6 @@ class AddRecord extends React.Component {
         const { title = '', content = '' } = this.props.storedArticle.toJS()
         this.props.addRecord({ title, content })
             .then(res => {
-                this.props.getUserInfo()
                 this.props.recordingArticle({ title:'', content: '' })
                 this.props.changeMyListVisible(true)
             })

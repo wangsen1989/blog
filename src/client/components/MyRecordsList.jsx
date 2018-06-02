@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { List, WhiteSpace, } from 'antd-mobile';
 import { getUserInfo } from '../redux/action/user.action';
+import { debug } from 'util';
 
 const Item = List.Item
 
