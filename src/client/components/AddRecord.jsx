@@ -2,40 +2,52 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Button, List, InputItem, WhiteSpace, TextareaItem } from 'antd-mobile';
-import { createForm } from 'rc-form';
-import { changeMyListVisible, addRecord } from '../redux/action/record.action'
+import { changeMyListVisible, addRecord, recordingArticle } from '../redux/action/record.action'
 import { getUserInfo } from '../redux/action/user.action'
 
 @connect(
-    null,
+    state => ({
+        storedArticle: state.recordReducer.get('storedArticle'),
+    }),
     {
         changeMyListVisible,
         addRecord,
         getUserInfo,
+        recordingArticle,
     }
 )
 
 class AddRecord extends React.Component {
     constructor(props) {
         super(props);
+        this.storeTitle = this.storeTitle.bind(this)
+        this.storeContent = this.storeContent.bind(this)
         this.submit = this.submit.bind(this)
     }
+    storeTitle(val) {
+        this.props.recordingArticle({ title: val })
+    }
+    storeContent(val) {
+        this.props.recordingArticle({ content: val })
+    }
     submit() {
-        const { title = '', content = '' } = this.props.form.getFieldsValue()
+        const { title = '', content = '' } = this.props.storedArticle.toJS()
         this.props.addRecord({ title, content })
             .then(res => {
                 this.props.getUserInfo()
+                this.props.recordingArticle({ title:'', content: '' })
                 this.props.changeMyListVisible(true)
             })
             .catch(err => console.log(err))
     }
     render() {
-        const { getFieldProps } = this.props.form;
+        const { title = '', content = '' } = this.props.storedArticle.toJS()
         return (
             <div>
                 <List renderHeader={() => '标题'}>
                     <InputItem
-                        {...getFieldProps('title')}
+                        value={title}
+                        onChange={this.storeTitle}
                         type="text"
                         clear={true}
                     ></InputItem>
@@ -43,9 +55,8 @@ class AddRecord extends React.Component {
 
                 <List renderHeader={() => '内容'}>
                     <TextareaItem
-                        {...getFieldProps('content', {
-                            initialValue: '',
-                        })}
+                        value={content}
+                        onChange={this.storeContent}
                         rows={10}
                     // count={10000}
                     />
@@ -60,4 +71,4 @@ class AddRecord extends React.Component {
     }
 }
 
-export default createForm()(AddRecord);
+export default AddRecord;

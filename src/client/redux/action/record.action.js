@@ -2,7 +2,7 @@ import axiosData from "../../utils/axiosData";
 
 export const CHANGE_MY_LIST_VISIBLE = 'change my list visible'
 export const ADD_RECORD = 'add record'
-
+export const RECORDING_ARTICLE = 'recording article'
 
 export const changeMyListVisible = (opts) => {
     return dispatch => {
@@ -25,4 +25,8 @@ export const addRecord = (opts) => {
             })
     }
 }
+export const recordingArticle = (opts) => ({
+    type: RECORDING_ARTICLE,
+    payload: opts
+})
 

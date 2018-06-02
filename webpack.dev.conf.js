@@ -114,5 +114,5 @@ module.exports = {
         hot: true,//热更新必须，维护状态@2， /这个是使用热更新的标志，然后并不提供热更新功能，需要引入hotModule
         hotOnly: true        //启用热模块替换而, 不刷新页面作为回退。
     },
-    devtool: "source-map",
+    // devtool: "source-map",
 }
