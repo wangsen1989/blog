@@ -34,13 +34,13 @@ class UserInfo extends React.Component {
     }
     render() {
         const { getFieldProps } = this.props.form;
-        const { name = '', record = [] } = this.props.userInfo.toJS();
+        const { name = '', records = [] } = this.props.userInfo.toJS();
         return (
             <List>
                 <Item extra={name}>账号</Item>
                 <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>关注</Item>
                 <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item>
-                <Item extra={record.length || 0} arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item>
+                <Item extra={records.length || 0} arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item>
                 <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>我的评价</Item>
                 <WhiteSpace />
                 <Button
