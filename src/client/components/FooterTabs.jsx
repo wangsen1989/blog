@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { TabBar } from 'antd-mobile';
-import style from './style.less';
+import style from '../container/app.less';
 
 class FooterTabs extends React.Component {
 

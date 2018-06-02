@@ -18,6 +18,7 @@ import Record from './Record'
 import User from './User'
 import NavHeader from '../components/NavHeader'
 import FooterTabs from '../components/FooterTabs'
+import style from './app.less'
 
 
 
@@ -32,12 +33,14 @@ class App extends React.Component {
           <BrowserRouter>
             <div>
               <NavHeader />
-              <Switch>
-                <Route path='/' exact component={Article} />
-                <Route path='/record' component={Record} />
-                <Route path='/user' component={User} />
-                <Redirect to="/" />
-              </Switch>
+              <div className={style.content}>
+                <Switch>
+                  <Route path='/' exact component={Article} />
+                  <Route path='/record' component={Record} />
+                  <Route path='/user' component={User} />
+                  <Redirect to="/" />
+                </Switch>
+              </div>
               <FooterTabs />
             </div>
           </BrowserRouter>

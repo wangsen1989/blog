@@ -3,6 +3,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { NavBar, Icon } from 'antd-mobile';
+import style from '../container/app.less';
 
 class NavHeader extends React.Component {
 
@@ -12,7 +13,7 @@ class NavHeader extends React.Component {
             pathname === '/record' ? '记录' :
                 pathname === '/user' ? '我' : ''
         return (
-            <div>
+            <div className={style.navHeaders}>
                 <NavBar
                     mode="dark"
                     icon={<Icon type="left" />}
