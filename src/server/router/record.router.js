@@ -5,9 +5,7 @@ const Record = model.getModel('record')
 const User = model.getModel('user')
 
 const recordRouter = (Router) => {
-    Router.get('/record',(req,res)=>{
-        console.log(req)
-    })
+
     Router.post('/addRecord', (req, res) => {
         //record表create新文章, then => user表更新引用，
         const { title, content } = req.body

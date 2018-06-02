@@ -13,7 +13,7 @@ const lodUserInfo = (payload) => ({
 export const login = (opts) => {
     return dispatch => {
         const { name, password } = opts
-        axiosData('./api/user', { name, password: pwdSault(password) })
+        axiosData('./api/login', { name, password: pwdSault(password) })
             .then(res => {
                 dispatch(lodUserInfo(res.data))
             })
@@ -30,10 +30,11 @@ export const getUserInfo = () => {
             .then(res => {
                 const { data = {} } = res
                 dispatch(lodUserInfo(data))
-                return Promise.resolve(data)
+                // return Promise.resolve(data)
             })
             .catch(err => {
-                return Promise.reject(err)
+                // return Promise.reject(err)
+                console.log(err)
             })
     }
 }

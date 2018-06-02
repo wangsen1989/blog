@@ -7,7 +7,7 @@ const utils = require('../utils')
 const userRouter = (Router) => {
 
 
-    Router.post('/user', (req, res) => {
+    Router.post('/login', (req, res) => {
         const { name, password } = req.body;
         const md5Pwd = utils.secretSault(password);
         User.findOne({ name, password: md5Pwd }, utils.responseFilter, (err, doc) => {

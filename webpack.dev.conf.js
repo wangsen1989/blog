@@ -99,7 +99,7 @@ module.exports = {
         port: 8888,
         // host: "0.0.0.0",
         proxy: {
-            "/api": {
+            "/": {
                 target: "http://127.0.0.1:9999",
                 changeOrigin: true,
                 // pathRewrite: { "^/api": "" }

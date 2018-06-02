@@ -8,7 +8,7 @@ class NavHeader extends React.Component {
 
     render() {
         const { pathname = '/' } = this.props.location
-        const name = pathname === '/' || pathname === '/article' ? '文章' :
+        const name = pathname === '/' ? '文章' :
             pathname === '/record' ? '记录' :
                 pathname === '/user' ? '我' : ''
         return (
