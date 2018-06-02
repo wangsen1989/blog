@@ -2,7 +2,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Switch, Button, List, InputItem, WhiteSpace, } from 'antd-mobile';
-import { createForm } from 'rc-form';
 import cookie from 'react-cookies'
 import { logOut, getUserInfo } from '../redux/action/user.action';
 
@@ -33,7 +32,6 @@ class UserInfo extends React.Component {
         this.props.logOut()
     }
     render() {
-        const { getFieldProps } = this.props.form;
         const { name = '', records = [] } = this.props.userInfo.toJS();
         return (
             <List>
@@ -53,4 +51,4 @@ class UserInfo extends React.Component {
     }
 }
 
-export default createForm()(UserInfo);
+export default UserInfo;

@@ -6,11 +6,14 @@ import { Icon, Card, WhiteSpace, Modal, List } from 'antd-mobile';
 const Item = List.Item
 
 import AddRecord from '../components/AddRecord'
+import MyRecordsList from '../components/MyRecordsList'
+
 import { changeMyListVisible } from '../redux/action/record.action'
 
 @connect(
   state => ({
     listVisibel: state.recordReducer.get('listVisibel'),
+    userInfo: state.userReducer.get('userInfo'),
   }),
   {
     changeMyListVisible
@@ -25,6 +28,7 @@ class Record extends React.Component {
     this.props.changeMyListVisible(false)
   }
   render() {
+    const { records = [] } = this.props.userInfo.toJS();
 
     return (
       <div>
@@ -38,13 +42,13 @@ class Record extends React.Component {
                 onClick={this.handleAddRecord}
               />}
               multipleLine>
-              共n篇
+              共{records.length}篇
             </Item>
             : null
         }
 
         {
-          this.props.listVisibel ? <div>记录列表</div> : <AddRecord />
+          this.props.listVisibel ? <MyRecordsList /> : <AddRecord />
         }
 
       </div >
