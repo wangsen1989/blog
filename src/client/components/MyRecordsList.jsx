@@ -18,10 +18,7 @@ class MyRecordsList extends React.Component {
         super(props);
     }
     componentDidMount() {
-        // if (cookie.load('userid') && !this.props.loginStatus) {
-        //     // 用户刷新操作，有cookie，但reducer登录标志丢失，需要重新拉取
         this.props.getUserInfo()
-        // }
     }
 
     render() {
