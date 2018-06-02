@@ -1,9 +1,9 @@
-import { demoReducer } from './demo.reducer'
-import { userReducer } from './user.reducer'
+import { articleReducer } from './article.reducer'
 import { recordReducer } from './record.reducer'
+import { userReducer } from './user.reducer'
 
 export {
-    demoReducer,
-    userReducer,
+    articleReducer,
     recordReducer,
+    userReducer,
 }

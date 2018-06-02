@@ -2,7 +2,7 @@ const model = require('../model/index.model')
 
 const articleRouter = (Router) => {
 
-    Router.get('/article', (req, res) => {
+    Router.post('/article', (req, res) => {
         const Record = model.getModel('record')
         Record.find({}, (err, doc) => {
             if (err) {
