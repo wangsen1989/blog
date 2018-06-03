@@ -2,10 +2,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-import { ListView } from 'antd-mobile';
+import { ListView, WhiteSpace, Card, WingBlank } from 'antd-mobile';
+import moment from 'moment'
 
 import { getArticles } from '../redux/action/article.action'
-
 
 let pageNo = 0;
 let changeRouter = false
@@ -26,16 +26,17 @@ class ArticleListView extends React.Component {
         const dataSource = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-
         this.state = {
             dataSource,
             noMore: false,
         };
+
         this.onEndReached = this.onEndReached.bind(this)
+        this.renderRow = this.renderRow.bind(this)
+
     }
 
     componentDidMount() {
-        console.log('componentDidMount');
         if (!changeRouter) {
             this.props.getArticles(0)
         } else {
@@ -46,14 +47,13 @@ class ArticleListView extends React.Component {
             });
         }
     }
+
     componentWillUnmount() {
-        console.log('componentWillUnmount');
         changeRouter = true
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.$$articles !== nextProps.$$articles) {
-            console.log('nextProps', nextProps);
             const articles = nextProps.$$articles.toJS()
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(articles),
@@ -66,7 +66,6 @@ class ArticleListView extends React.Component {
         }
     }
 
-
     onEndReached = (event) => {
         // debugger
         if (this.state.noMore) {
@@ -76,23 +75,34 @@ class ArticleListView extends React.Component {
         this.props.getArticles(++pageNo)
     }
 
+    renderRow(rowData, sectionID, rowID) {
+        return (
+            <div>
+                <WingBlank size="sm">
+                    <WhiteSpace size="sm"/>
+                    <Card>
+                        <Card.Body>
+                            <div>{rowData.title}</div>
+                        </Card.Body>
+                        <Card.Footer
+                            content={`${rowData.comments.length}评论`}
+                            extra={<div>{rowData.username}</div>} />
+                    </Card>
+                </WingBlank>
+            </div>
+        );
+    };
+
     render() {
-        const row = (rowData, sectionID, rowID) => {
-            return (
-                <div key={rowID} style={{ height: 150 }}>
-                    <div>{rowData.title}</div>
-                </div>
-            );
-        };
         return (
             <ListView
                 dataSource={this.state.dataSource}
-                renderHeader={() => <span>header</span>}
+                // renderHeader={() => <span>header</span>}
                 renderFooter={() => (
                     <div style={{ padding: 5, textAlign: 'center' }}>
                         {this.state.noMore ? '已无更多！' : '加载中...'}
                     </div>)}
-                renderRow={row}
+                renderRow={this.renderRow}
                 pageSize={10}
                 useBodyScroll
                 scrollRenderAheadDistance={500}
