@@ -16,6 +16,22 @@ const articleRouter = (Router) => {
             .limit(10)
             .skip(pageNo * pageSize)
     })
+
+    Router.post('/articleDetail', (req, res) => {
+        const Record = model.getModel('record')
+        const { artId } = req.body
+        Record.findById(artId, (err, doc) => {
+            if (err) {
+                res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
+            }
+            else {
+                res.json({ code: '000', data: doc })
+            }
+        })
+    })
+
+
+
 }
 
 module.exports = {

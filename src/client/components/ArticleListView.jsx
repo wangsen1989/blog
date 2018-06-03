@@ -5,18 +5,22 @@ import { connect } from "react-redux"
 import { ListView, WhiteSpace, Card, WingBlank, Modal } from 'antd-mobile';
 import moment from 'moment'
 
-import { getArticles } from '../redux/action/article.action'
+import { getArticles, changeArtModal } from '../redux/action/article.action'
+import style from './style.less'
 
 let pageNo = 0;
 let changeRouter = false
 
 @connect(
     state => ({
-        $$articles: state.articleReducer.get('articles'),
+        $$articles: state.articleReducer.get('$$articles'),
         noMore: state.articleReducer.get('noMore'),
+        $$articleDetail: state.articleReducer.get('$$articleDetail'),
+        modalVisible: state.articleReducer.get('modalVisible'),
     }),
     {
         getArticles,
+        changeArtModal,
     }
 )
 
@@ -81,7 +85,8 @@ class ArticleListView extends React.Component {
                 <WingBlank size="sm">
                     <WhiteSpace size="sm" />
                     <Card onClick={() => {
-                        this.setState({ modal: true, modalData: rowData })
+                        // this.setState({ modal: true, modalData: rowData })
+                        this.props.changeArtModal(true, rowData._id)
                     }
                     }>
                         <Card.Body>
@@ -99,17 +104,34 @@ class ArticleListView extends React.Component {
     renderModal() {
         return (
             <Modal
-                style={{ width: '100%', height: '100%' }}
-                visible={this.state.modal}
+                className={style.artModal}
+                visible={this.props.modalVisible}
                 transparent
                 closable
                 maskClosable={true}
-                onClose={() => this.setState({ modal: false })}
-                title="详情"
-                // footer={[{ text: 'Ok', onPress: () => { console.log('ok'); } }]}
-                // wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+                onClose={() => {
+                    this.props.changeArtModal(false)
+                }
+                }
+                title={this.props.$$articleDetail.toJS().title}
             >
-                {this.state.modalData.title}
+
+                <Card>
+                    <Card.Body>
+                        <div>{this.props.$$articleDetail.toJS().content}</div>
+                    </Card.Body>
+                </Card>
+
+                <div className={style.commentsHeader}>评论区</div>
+                <Card>
+                    <Card.Body>
+                        {this.props.$$articleDetail.toJS().comments || [].map(comment => {
+                            return (
+                                <p>{comment}</p>
+                            )
+                        })}
+                    </Card.Body>
+                </Card>
             </Modal>
         )
     };
@@ -117,7 +139,7 @@ class ArticleListView extends React.Component {
     render() {
         return (
             <div>
-                {this.state.modal && this.renderModal()}
+                {this.renderModal()}
                 <ListView
                     dataSource={this.state.dataSource}
                     // renderHeader={() => <span>header</span>}

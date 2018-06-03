@@ -8,7 +8,7 @@ import { getArticles } from '../redux/action/article.action'
 
 @connect(
   state => ({
-    $$articles: state.articleReducer.get('articles')
+    $$articles: state.articleReducer.get('$$articles')
   }),
   {
     getArticles,
