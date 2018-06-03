@@ -8,10 +8,10 @@ const getArticles = (pageNo, pageSize = 10) => {
             .then(res => {
                 const preRender = getState().articleReducer.get('articles').toJS();
                 let nextRender = []
-                if (preRender.length <= 20) {
+                if (preRender.length <= 1000) {
                     nextRender = [...preRender, ...res.data]
-                }else{
-                    nextRender= [...preRender.slice(10), ...res.data]
+                } else {
+                    nextRender = [...preRender.slice(10), ...res.data]
                 }
                 debugger
                 dispatch({
