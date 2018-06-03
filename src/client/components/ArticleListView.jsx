@@ -2,7 +2,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-import { ListView, WhiteSpace, Card, WingBlank } from 'antd-mobile';
+import { ListView, WhiteSpace, Card, WingBlank, Modal } from 'antd-mobile';
 import moment from 'moment'
 
 import { getArticles } from '../redux/action/article.action'
@@ -79,8 +79,11 @@ class ArticleListView extends React.Component {
         return (
             <div>
                 <WingBlank size="sm">
-                    <WhiteSpace size="sm"/>
-                    <Card>
+                    <WhiteSpace size="sm" />
+                    <Card onClick={() => {
+                        this.setState({ modal: true, modalData: rowData })
+                    }
+                    }>
                         <Card.Body>
                             <div>{rowData.title}</div>
                         </Card.Body>
@@ -93,22 +96,43 @@ class ArticleListView extends React.Component {
         );
     };
 
+    renderModal() {
+        return (
+            <Modal
+                style={{ width: '100%', height: '100%' }}
+                visible={this.state.modal}
+                transparent
+                closable
+                maskClosable={true}
+                onClose={() => this.setState({ modal: false })}
+                title="详情"
+                // footer={[{ text: 'Ok', onPress: () => { console.log('ok'); } }]}
+                // wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+            >
+                {this.state.modalData.title}
+            </Modal>
+        )
+    };
+
     render() {
         return (
-            <ListView
-                dataSource={this.state.dataSource}
-                // renderHeader={() => <span>header</span>}
-                renderFooter={() => (
-                    <div style={{ padding: 5, textAlign: 'center' }}>
-                        {this.state.noMore ? '已无更多！' : '加载中...'}
-                    </div>)}
-                renderRow={this.renderRow}
-                pageSize={10}
-                useBodyScroll
-                scrollRenderAheadDistance={500}
-                onEndReached={this.onEndReached}
-                onEndReachedThreshold={100}
-            />
+            <div>
+                {this.state.modal && this.renderModal()}
+                <ListView
+                    dataSource={this.state.dataSource}
+                    // renderHeader={() => <span>header</span>}
+                    renderFooter={() => (
+                        <div style={{ padding: 5, textAlign: 'center' }}>
+                            {this.state.noMore ? '已无更多！' : '加载中...'}
+                        </div>)}
+                    renderRow={this.renderRow}
+                    pageSize={10}
+                    useBodyScroll
+                    scrollRenderAheadDistance={500}
+                    onEndReached={this.onEndReached}
+                    onEndReachedThreshold={100}
+                />
+            </div>
         );
     }
 }
