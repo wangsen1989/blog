@@ -35,17 +35,24 @@ class ArticleListView extends React.Component {
     }
 
     componentDidMount() {
-        debugger
-        !changeRouter && this.props.getArticles(0)
+        console.log('componentDidMount');
+        if(!changeRouter) {
+            this.props.getArticles(0)
+        }else{
+            const articles = this.props.$$articles.toJS()
+            this.setState({
+                dataSource: this.state.dataSource.cloneWithRows(articles),
+            });
+        }
     }
     componentWillUnmount() {
-        debugger
+        console.log('componentWillUnmount');
         changeRouter = true
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.$$articles !== nextProps.$$articles) {
-            // debugger
+            console.log('nextProps', nextProps);
             const articles = nextProps.$$articles.toJS()
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(articles),
@@ -55,9 +62,10 @@ class ArticleListView extends React.Component {
 
 
     onEndReached = (event) => {
-        if (this.state.isLoading && !this.state.hasMore) {
-            return;
-        }
+        // debugger
+        // if (this.state.isLoading && !this.state.hasMore) {
+        //     return;
+        // }
         console.log('reach end', event);
         this.props.getArticles(++pageIndex)
     }
