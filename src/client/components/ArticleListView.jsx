@@ -7,13 +7,13 @@ import { ListView } from 'antd-mobile';
 import { getArticles } from '../redux/action/article.action'
 
 
-const NUM_ROWS = 10;
-let pageIndex = 0;
+let pageNo = 0;
 let changeRouter = false
 
 @connect(
     state => ({
-        $$articles: state.articleReducer.get('articles')
+        $$articles: state.articleReducer.get('articles'),
+        noMore: state.articleReducer.get('noMore'),
     }),
     {
         getArticles,
@@ -29,19 +29,20 @@ class ArticleListView extends React.Component {
 
         this.state = {
             dataSource,
-            isLoading: true,
+            noMore: false,
         };
         this.onEndReached = this.onEndReached.bind(this)
     }
 
     componentDidMount() {
         console.log('componentDidMount');
-        if(!changeRouter) {
+        if (!changeRouter) {
             this.props.getArticles(0)
-        }else{
+        } else {
             const articles = this.props.$$articles.toJS()
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(articles),
+                noMore: this.props.noMore,
             });
         }
     }
@@ -58,16 +59,21 @@ class ArticleListView extends React.Component {
                 dataSource: this.state.dataSource.cloneWithRows(articles),
             });
         }
+        if (this.props.noMore !== nextProps.noMore) {
+            this.setState({
+                noMore: nextProps.noMore,
+            });
+        }
     }
 
 
     onEndReached = (event) => {
         // debugger
-        // if (this.state.isLoading && !this.state.hasMore) {
-        //     return;
-        // }
+        if (this.state.noMore) {
+            return;
+        }
         console.log('reach end', event);
-        this.props.getArticles(++pageIndex)
+        this.props.getArticles(++pageNo)
     }
 
     render() {
@@ -80,20 +86,18 @@ class ArticleListView extends React.Component {
         };
         return (
             <ListView
-                ref={el => this.lv = el}
                 dataSource={this.state.dataSource}
                 renderHeader={() => <span>header</span>}
-                renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-                    {this.state.isLoading ? 'Loading...' : 'Loaded'}
-                </div>)}
+                renderFooter={() => (
+                    <div style={{ padding: 5, textAlign: 'center' }}>
+                        {this.state.noMore ? '已无更多！' : '加载中...'}
+                    </div>)}
                 renderRow={row}
-                className="am-list"
-                pageSize={4}
+                pageSize={10}
                 useBodyScroll
-                onScroll={() => { console.log('scroll'); }}
                 scrollRenderAheadDistance={500}
                 onEndReached={this.onEndReached}
-                onEndReachedThreshold={10}
+                onEndReachedThreshold={100}
             />
         );
     }

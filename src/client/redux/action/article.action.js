@@ -13,10 +13,9 @@ const getArticles = (pageNo, pageSize = 10) => {
                 } else {
                     nextRender = [...preRender.slice(10), ...res.data]
                 }
-                debugger
                 dispatch({
                     type: GET_ARTICLES,
-                    payload: nextRender,
+                    payload: { nextRender, noMore: res.data.length === 0 },
                 })
             })
             .catch(err => console.log(err))
