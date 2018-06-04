@@ -1,43 +1,57 @@
-/* eslint no-dupe-keys: 0 */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-// import { ListView, WhiteSpace, Card, WingBlank } from 'antd-mobile';
-// import moment from 'moment'
+import { Modal, Card } from 'antd-mobile';
 
-// import { getArticles } from '../redux/action/article.action'
+import { changeArtModal } from '../redux/action/article.action'
+import style from './style.less'
 
 
 @connect(
     state => ({
-        // $$articles: state.articleReducer.get('articles'),
-        // noMore: state.articleReducer.get('noMore'),
+        $$articleDetail: state.articleReducer.get('$$articleDetail'),
+        modalVisible: state.articleReducer.get('modalVisible'),
     }),
     {
-        // getArticles,
+        changeArtModal,
     }
 )
 
 class ArticleContent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            // dataSource,
-            // noMore: false,
-        };
-
-        // this.onEndReached = this.onEndReached.bind(this)
-        // this.renderRow = this.renderRow.bind(this)
-
-    }
-
-    componentDidMount() {
-    }
 
     render() {
         return (
-            <div>内容</div>
-        );
+            <Modal
+                className={style.artModal}
+                visible={this.props.modalVisible}
+                transparent
+                closable
+                maskClosable={true}
+                onClose={() => {
+                    this.props.changeArtModal(false)
+                }
+                }
+                title={this.props.$$articleDetail.toJS().title}
+            >
+
+                <Card>
+                    <Card.Body>
+                        <div>{this.props.$$articleDetail.toJS().content}</div>
+                    </Card.Body>
+                </Card>
+
+                <div className={style.commentsHeader}>评论区</div>
+                <Card>
+                    <Card.Body>
+                        {this.props.$$articleDetail.toJS().comments || [].map(comment => {
+                            return (
+                                <p>{comment}</p>
+                            )
+                        })}
+                    </Card.Body>
+                </Card>
+            </Modal>
+        )
     }
 }
 
