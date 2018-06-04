@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-import { Modal, Card } from 'antd-mobile';
+import { Modal, Card, List, TextareaItem, Button, WhiteSpace } from 'antd-mobile';
 
-import { changeArtModal } from '../redux/action/article.action'
+import { changeArtModal, storeComment } from '../redux/action/article.action'
 import style from './style.less'
 
 
@@ -11,9 +11,11 @@ import style from './style.less'
     state => ({
         $$articleDetail: state.articleReducer.get('$$articleDetail'),
         modalVisible: state.articleReducer.get('modalVisible'),
+        comment: state.articleReducer.get('comment'),
     }),
     {
         changeArtModal,
+        storeComment,
     }
 )
 
@@ -25,12 +27,6 @@ class ArticleContent extends React.Component {
                 className={style.artModal}
                 visible={this.props.modalVisible}
                 transparent
-                // closable
-                // maskClosable={true}
-                onClose={() => {
-                    // this.props.changeArtModal(false)
-                }
-                }
                 title={this.props.$$articleDetail.toJS().title}
             >
 
@@ -41,6 +37,21 @@ class ArticleContent extends React.Component {
                 </Card>
 
                 <div className={style.commentsHeader}>评论区</div>
+                <List>
+                    <TextareaItem
+                        value={this.props.comment}
+                        onChange={val => this.props.storeComment(val)}
+                        rows={5}
+                    />
+                </List>
+                <Button
+                    type="primary"
+                    onClick={() => {
+                        console.log(this.props.comment)
+                        this.props.storeComment('')
+                    }}
+                >评论</Button>
+                <WhiteSpace />
                 <Card>
                     <Card.Body>
                         {this.props.$$articleDetail.toJS().comments || [].map(comment => {

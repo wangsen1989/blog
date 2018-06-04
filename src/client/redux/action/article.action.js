@@ -2,6 +2,7 @@ import axiosData from "../../utils/axiosData";
 
 export const GET_ARTICLES = "get articles"
 export const CHANGE_ART_MODAL = "change art modal"
+export const STORE_COMMENT = "store comment"
 
 const getArticles = (pageNo, pageSize = 10) => {
     return (dispatch, getState) => {
@@ -49,7 +50,14 @@ const changeArtModal = (visible, artId) => {
     }
 }
 
+const storeComment = (comment) => ({
+    type: STORE_COMMENT,
+    payload: comment,
+})
+
+
 export {
     getArticles,
     changeArtModal,
+    storeComment,
 }
