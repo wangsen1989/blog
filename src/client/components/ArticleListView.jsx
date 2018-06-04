@@ -6,9 +6,11 @@ import { ListView, WhiteSpace, Card, WingBlank, Modal } from 'antd-mobile';
 import ArticleContent from './ArticleContent'
 import { getArticles, changeArtModal } from '../redux/action/article.action'
 import style from './style.less'
+import { debug } from 'util';
 
 let pageNo = 0;
 let changeRouter = false
+let scrollTop = 0
 
 @connect(
     state => ({
@@ -47,10 +49,20 @@ class ArticleListView extends React.Component {
                 noMore: this.props.noMore,
             });
         }
+        // xx.scrollTo(0,800); // 必须使用setTimeout才生效
+        // this.timer = setTimeout(() => document.documentElement.scrollTo(0,scrollTop), 1000);
+        this.timer = setTimeout(() => this.lv.scrollTo(0,scrollTop), 1000);
+        
+
+
     }
 
     componentWillUnmount() {
         changeRouter = true
+        scrollTop = document.documentElement.scrollTop
+        console.log('scrollTop', scrollTop);
+        this.timer && clearTimeout(this.timer);
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -95,12 +107,13 @@ class ArticleListView extends React.Component {
         );
     };
 
-
     render() {
         return (
             <div>
-                <ArticleContent/>
+                <ArticleContent />
                 <ListView
+                    // ref='listView'
+                    ref={el =>  { this.lv = el; return this.lv }}
                     dataSource={this.state.dataSource}
                     // renderHeader={() => <span>header</span>}
                     renderFooter={() => (
