@@ -13,6 +13,7 @@ const articleRouter = (Router) => {
                 res.json({ code: '000', data: doc })
             }
         })
+            .sort({_id:-1})
             .limit(10)
             .skip(pageNo * pageSize)
     })
