@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { List, WhiteSpace, } from 'antd-mobile';
 import { getUserInfo } from '../redux/action/user.action';
-import { debug } from 'util';
+import style from './style.less';
 
 const Item = List.Item
 
@@ -25,22 +25,24 @@ class MyRecordsList extends React.Component {
     render() {
         const { records = [] } = this.props.userInfo.toJS();
         return (
-            <List>
+            <div className={style.myRecordsList}>
+                <List>
 
-                {
-                    records.map(record => {
-                        return (
-                            <Item
-                                key={record.recordId}
-                                arrow="horizontal"
-                                multipleLine
-                                onClick={() => {console.log(record) }}
-                            >{record.title}</Item>
-                        )
-                    })
-                }
+                    {
+                        records.reverse().map(record => {
+                            return (
+                                <Item
+                                    key={record.recordId}
+                                    arrow="horizontal"
+                                    multipleLine
+                                    onClick={() => { console.log(record) }}
+                                >{record.title}</Item>
+                            )
+                        })
+                    }
 
-            </List>
+                </List>
+            </div>
         );
     }
 }
