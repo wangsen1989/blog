@@ -6,7 +6,6 @@ import { ListView, WhiteSpace, Card, WingBlank, Modal, PullToRefresh } from 'ant
 import ArticleContent from './ArticleContent'
 import { getArticles, changeArtModal } from '../redux/action/article.action'
 import style from './style.less'
-import { debug } from 'util';
 
 let pageNo = 0;
 let changeRouter = false
