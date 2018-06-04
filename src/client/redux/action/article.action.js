@@ -55,9 +55,18 @@ const storeComment = (comment) => ({
     payload: comment,
 })
 
+const submitComment = (opts) => {
+    return dispatch => {
+        return axiosData('/api/submitComment', opts)
+            .then(res => Promise.resolve(res))
+            .catch(err => Promise.resolve())
+
+    }
+}
 
 export {
     getArticles,
     changeArtModal,
     storeComment,
+    submitComment,
 }

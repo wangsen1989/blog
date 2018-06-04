@@ -13,7 +13,7 @@ const articleRouter = (Router) => {
                 res.json({ code: '000', data: doc })
             }
         })
-            .sort({_id:-1})
+            .sort({ _id: -1 })
             .limit(10)
             .skip(pageNo * pageSize)
     })
@@ -30,6 +30,15 @@ const articleRouter = (Router) => {
             }
         })
     })
+
+    Router.post('/submitComment', (req, res) => {
+        const Record = model.getModel('record')
+        const { _id, comment } = req.body
+        Record.update({ _id }, { $push: { comments: comment } }, (err, doc) => {
+            res.json({ code: '000' })
+        });
+    })
+
 
 
 

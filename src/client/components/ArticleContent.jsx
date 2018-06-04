@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
 import { Modal, Card, List, TextareaItem, Button, WhiteSpace } from 'antd-mobile';
 
-import { changeArtModal, storeComment } from '../redux/action/article.action'
+import { changeArtModal, storeComment, submitComment } from '../redux/action/article.action'
 import style from './style.less'
 
 
@@ -16,25 +16,28 @@ import style from './style.less'
     {
         changeArtModal,
         storeComment,
+        submitComment,
     }
 )
 
 class ArticleContent extends React.Component {
 
     render() {
+        const { title = '', content = '', comments = [], _id = '' } = this.props.$$articleDetail.toJS()
         return (
             <Modal
                 className={style.artModal}
                 visible={this.props.modalVisible}
                 transparent
-                title={this.props.$$articleDetail.toJS().title}
+                title={title}
             >
 
                 <Card>
                     <Card.Body>
-                        <div>{this.props.$$articleDetail.toJS().content}</div>
+                        <div>{content}</div>
                     </Card.Body>
                 </Card>
+
 
                 <div className={style.commentsHeader}>评论区</div>
                 <List>
@@ -48,13 +51,16 @@ class ArticleContent extends React.Component {
                     type="primary"
                     onClick={() => {
                         console.log(this.props.comment)
+                        this.props.submitComment({ _id, comment: this.props.comment })
                         this.props.storeComment('')
                     }}
                 >评论</Button>
                 <WhiteSpace />
+
+
                 <Card>
                     <Card.Body>
-                        {this.props.$$articleDetail.toJS().comments || [].map(comment => {
+                        {comments.map(comment => {
                             return (
                                 <p>{comment}</p>
                             )
