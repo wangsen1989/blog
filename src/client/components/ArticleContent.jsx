@@ -25,10 +25,10 @@ class ArticleContent extends React.Component {
                 className={style.artModal}
                 visible={this.props.modalVisible}
                 transparent
-                closable
-                maskClosable={true}
+                // closable
+                // maskClosable={true}
                 onClose={() => {
-                    this.props.changeArtModal(false)
+                    // this.props.changeArtModal(false)
                 }
                 }
                 title={this.props.$$articleDetail.toJS().title}
