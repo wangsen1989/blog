@@ -5,21 +5,26 @@ export const CHANGE_ART_MODAL = "change art modal"
 
 const getArticles = (pageNo, pageSize = 10) => {
     return (dispatch, getState) => {
-        axiosData('/api/article', { pageNo, pageSize })
+        return axiosData('/api/article', { pageNo, pageSize })
             .then(res => {
                 const preRender = getState().articleReducer.get('$$articles').toJS();
                 let nextRender = []
-                if (preRender.length <= 1000) {
-                    nextRender = [...preRender, ...res.data]
+                if (pageNo === 0) {
+                    nextRender = res.data
                 } else {
-                    nextRender = [...preRender.slice(10), ...res.data]
+                    if (preRender.length <= 1000) {
+                        nextRender = [...preRender, ...res.data]
+                    } else {
+                        nextRender = [...preRender.slice(10), ...res.data]
+                    }
                 }
                 dispatch({
                     type: GET_ARTICLES,
                     payload: { nextRender, noMore: res.data.length === 0 },
                 })
+                return Promise.resolve()
             })
-            .catch(err => console.log(err))
+            .catch(err => Promise.resolve())
     }
 }
 
@@ -35,7 +40,7 @@ const changeArtModal = (visible, artId) => {
                 })
                 .catch(err => console.log(err))
         }
-        else{
+        else {
             dispatch({
                 type: CHANGE_ART_MODAL,
                 payload: { modalVisible: false, articleDetail: {} },

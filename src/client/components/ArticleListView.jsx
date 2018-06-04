@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-import { ListView, WhiteSpace, Card, WingBlank, Modal } from 'antd-mobile';
+import { ListView, WhiteSpace, Card, WingBlank, Modal, PullToRefresh } from 'antd-mobile';
 // import moment from 'moment'
 import ArticleContent from './ArticleContent'
 import { getArticles, changeArtModal } from '../redux/action/article.action'
@@ -34,6 +34,7 @@ class ArticleListView extends React.Component {
             noMore: false,
         };
 
+        this.onRefresh = this.onRefresh.bind(this)
         this.onEndReached = this.onEndReached.bind(this)
         this.renderRow = this.renderRow.bind(this)
 
@@ -51,8 +52,8 @@ class ArticleListView extends React.Component {
         }
         // xx.scrollTo(0,800); // 必须使用setTimeout才生效
         // this.timer = setTimeout(() => document.documentElement.scrollTo(0,scrollTop), 1000);
-        this.timer = setTimeout(() => this.lv.scrollTo(0,scrollTop), 1000);
-        
+        this.timer = setTimeout(() => this.lv.scrollTo(0, scrollTop), 1000);
+
 
 
     }
@@ -78,7 +79,16 @@ class ArticleListView extends React.Component {
             });
         }
     }
-
+    onRefresh() {
+        this.setState({ refreshing: true });
+        pageNo = 0
+        this.props.getArticles(0)
+            .then(() => {
+                this.setState({
+                    refreshing: false,
+                });
+            })
+    };
     onEndReached = (event) => {
         if (this.state.noMore) {
             return;
@@ -124,6 +134,11 @@ class ArticleListView extends React.Component {
                     scrollRenderAheadDistance={500}
                     onEndReached={this.onEndReached}
                     onEndReachedThreshold={100}
+                    pullToRefresh={<PullToRefresh
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.onRefresh}
+                    />}
+
                 />
             </div>
         );
