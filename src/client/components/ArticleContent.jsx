@@ -5,6 +5,7 @@ import { Modal, Card, List, TextareaItem, Button, WhiteSpace } from 'antd-mobile
 
 import { changeArtModal, storeComment, submitComment } from '../redux/action/article.action'
 import style from './style.less'
+import { Item } from 'antd-mobile/lib/tab-bar';
 
 
 @connect(
@@ -52,21 +53,29 @@ class ArticleContent extends React.Component {
                     onClick={() => {
                         console.log(this.props.comment)
                         this.props.submitComment({ _id, comment: this.props.comment })
-                        this.props.storeComment('')
+                            .then(res => {
+                                this.props.storeComment('')
+                                this.props.changeArtModal(true, _id)
+                            })
                     }}
                 >评论</Button>
                 <WhiteSpace />
 
 
-                <Card>
-                    <Card.Body>
-                        {comments.map(comment => {
-                            return (
-                                <p>{comment}</p>
-                            )
-                        })}
-                    </Card.Body>
-                </Card>
+                <List>
+                    {comments.reverse().map(com => {
+                        return (
+                            <div className={style.comment}>
+                                <div className={style.commentName}>
+                                    <Item>{com.username}:</Item>
+                                </div>
+                                <div className={style.commentContent}>
+                                    <Item>{com.comment}</Item>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </List>
             </Modal>
         )
     }

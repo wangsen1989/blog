@@ -97,7 +97,7 @@ class ArticleListView extends React.Component {
 
     renderRow(rowData, sectionID, rowID) {
         return (
-            <div>
+            <div key={rowData._id}>
                 <WingBlank size="sm">
                     <WhiteSpace size="sm" />
                     <Card onClick={() => {

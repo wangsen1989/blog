@@ -34,7 +34,8 @@ const articleRouter = (Router) => {
     Router.post('/submitComment', (req, res) => {
         const Record = model.getModel('record')
         const { _id, comment } = req.body
-        Record.update({ _id }, { $push: { comments: comment } }, (err, doc) => {
+        const { userid, username } = req.cookies
+        Record.update({ _id }, { $push: { comments: { comment, userid, username } } }, (err, doc) => {
             res.json({ code: '000' })
         });
     })
