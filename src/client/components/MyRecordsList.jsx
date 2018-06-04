@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { List, WhiteSpace, } from 'antd-mobile';
+import { List, WhiteSpace, SwipeAction } from 'antd-mobile';
 import { getUserInfo } from '../redux/action/user.action';
 import style from './style.less';
 
@@ -27,20 +27,37 @@ class MyRecordsList extends React.Component {
         return (
             <div className={style.myRecordsList}>
                 <List>
-
                     {
                         records.reverse().map(record => {
                             return (
-                                <Item
-                                    key={record.recordId}
-                                    arrow="horizontal"
-                                    multipleLine
-                                    onClick={() => { console.log(record) }}
-                                >{record.title}</Item>
+                                <SwipeAction
+                                    style={{ backgroundColor: 'gray' }}
+                                    autoClose
+                                    right={[
+                                        {
+                                            text: '编辑',
+                                            onPress: () => console.log('cancel'),
+                                            style: { backgroundColor: '#ddd', color: 'white' },
+                                        },
+                                        {
+                                            text: '删除',
+                                            onPress: () => console.log('delete'),
+                                            style: { backgroundColor: '#F4333C', color: 'white' },
+                                        },
+                                    ]}
+                                    onOpen={() => console.log('global open')}
+                                    onClose={() => console.log('global close')}
+                                >
+                                    <Item
+                                        key={record.recordId}
+                                        arrow="horizontal"
+                                        multipleLine
+                                        onClick={() => { console.log(record) }}
+                                    >{record.title}</Item>
+                                </SwipeAction>
                             )
                         })
                     }
-
                 </List>
             </div>
         );
