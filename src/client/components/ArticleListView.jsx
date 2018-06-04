@@ -112,10 +112,8 @@ class ArticleListView extends React.Component {
             <div>
                 <ArticleContent />
                 <ListView
-                    // ref='listView'
-                    ref={el =>  { this.lv = el; return this.lv }}
+                    ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
-                    // renderHeader={() => <span>header</span>}
                     renderFooter={() => (
                         <div style={{ padding: 5, textAlign: 'center' }}>
                             {this.state.noMore ? '已无更多！' : '加载中...'}
