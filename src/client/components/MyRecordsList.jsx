@@ -36,6 +36,7 @@ class MyRecordsList extends React.Component {
 
     render() {
         const { records = [] } = this.props.userInfo.toJS();
+        debugger
         return (
             <div className={style.myRecordsList}>
                 <List>
