@@ -40,7 +40,6 @@ class Record extends React.Component {
         {
           this.props.listVisibel ?
             <Item
-              className={style.recordsCount}
               extra={<img
                 style={{ width: 25 }}
                 src={require('../components/assets/images/addRecord.png')}

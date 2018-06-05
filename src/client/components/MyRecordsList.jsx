@@ -43,7 +43,7 @@ class MyRecordsList extends React.Component {
     render() {
         const { records = [] } = this.props.userInfo.toJS();
         return (
-            <div className={style.myRecordsList}>
+            <div>
                 <List>
                     {
                         records.reverse().map(record => {
