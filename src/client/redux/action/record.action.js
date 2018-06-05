@@ -30,3 +30,15 @@ export const recordingArticle = (opts) => ({
     payload: opts
 })
 
+
+export const getArticleDetail = (artId) => {
+    return (dispatch, getState) => {
+        axiosData('/api/articleDetail', { artId })
+            .then(res => {
+                debugger
+                const { title, content } = res.data
+                dispatch(recordingArticle({ title, content }))
+            })
+            .catch(err => console.log(err))
+    }
+}

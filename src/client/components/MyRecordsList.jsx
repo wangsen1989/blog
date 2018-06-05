@@ -3,6 +3,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { List, WhiteSpace, SwipeAction } from 'antd-mobile';
 import { getUserInfo } from '../redux/action/user.action';
+import { getArticleDetail, changeMyListVisible, recordingArticle } from '../redux/action/record.action'
+
 import style from './style.less';
 
 const Item = List.Item
@@ -11,7 +13,12 @@ const Item = List.Item
     state => ({
         userInfo: state.userReducer.get('userInfo')
     }),
-    { getUserInfo }
+    {
+        getUserInfo,
+        changeMyListVisible,
+        recordingArticle,
+        getArticleDetail,
+    }
 )
 
 class MyRecordsList extends React.Component {
@@ -20,6 +27,11 @@ class MyRecordsList extends React.Component {
     }
     componentDidMount() {
         this.props.getUserInfo()
+    }
+
+    handleEditRecord(id) {
+        this.props.changeMyListVisible(false)
+        this.props.getArticleDetail(id)
     }
 
     render() {
@@ -36,7 +48,7 @@ class MyRecordsList extends React.Component {
                                     right={[
                                         {
                                             text: '编辑',
-                                            onPress: () => console.log('cancel'),
+                                            onPress: () => this.handleEditRecord(record.recordId),
                                             style: { backgroundColor: '#ddd', color: 'white' },
                                         },
                                         {
