@@ -29,10 +29,10 @@ class AddRecord extends React.Component {
         this.props.recordingArticle({ content: val })
     }
     submit() {
-        const { title = '', content = '' } = this.props.storedArticle.toJS()
-        this.props.addRecord({ title, content })
+        const { _id, title = '', content = '' } = this.props.storedArticle.toJS()
+        this.props.addRecord({ _id, title, content })
             .then(res => {
-                this.props.recordingArticle({ title:'', content: '' })
+                this.props.recordingArticle({ _id: '', title:'', content: '' })
                 this.props.changeMyListVisible(true)
             })
             .catch(err => console.log(err))

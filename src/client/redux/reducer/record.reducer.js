@@ -4,6 +4,7 @@ import { CHANGE_MY_LIST_VISIBLE, RECORDING_ARTICLE } from '../action/record.acti
 const $$initialState = Immutable.fromJS({
     listVisibel: true,
     storedArticle: {
+        _id:'',
         title: '',
         content: ''
     }

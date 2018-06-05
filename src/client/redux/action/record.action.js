@@ -36,8 +36,8 @@ export const getArticleDetail = (artId) => {
         axiosData('/api/articleDetail', { artId })
             .then(res => {
                 debugger
-                const { title, content } = res.data
-                dispatch(recordingArticle({ title, content }))
+                const { title, content, _id } = res.data
+                dispatch(recordingArticle({ title, content, _id }))
             })
             .catch(err => console.log(err))
     }
