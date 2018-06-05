@@ -47,9 +47,9 @@ class ArticleContent extends React.Component {
                 <WhiteSpace />
 
                 <List>
-                    {comments.map(com => {
+                    {comments.map((com, index) => {
                         return (
-                            <div className={style.comment}>
+                            <div className={style.comment} key={index}>
                                 <div className={style.commentName}>
                                     <Item>{com.username}:</Item>
                                 </div>

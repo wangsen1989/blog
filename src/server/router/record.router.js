@@ -49,6 +49,23 @@ const recordRouter = (Router) => {
         }
     })
 
+    Router.post('/deleteRecord', (req, res) => {
+        const { artId } = req.body
+
+        Record.deleteOne({ _id: artId }, (err, doc) => {
+            if (err) {
+                res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
+            }
+            else {
+                //user表增加文章缩略
+                // const newRecord = { recordId: doc._id.toString(), title }
+                // User.update({ _id: userid }, { $push: { records: newRecord } }, (err, document) => {
+                res.json({ code: '000' })
+                // });
+            }
+        })
+    })
+
 }
 
 module.exports = {

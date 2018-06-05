@@ -41,3 +41,11 @@ export const getArticleDetail = (artId) => {
             .catch(err => console.log(err))
     }
 }
+
+export const deleteRecord = (artId) => {
+    return (dispatch, getState) => {
+        return axiosData('/api/deleteRecord', { artId })
+            .then(res => Promise.resolve(res))
+            .catch(err => Promise.reject(err))
+    }
+}

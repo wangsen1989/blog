@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { List, WhiteSpace, SwipeAction } from 'antd-mobile';
 import { getUserInfo } from '../redux/action/user.action';
-import { getArticleDetail, changeMyListVisible, recordingArticle } from '../redux/action/record.action'
+import { getArticleDetail, changeMyListVisible, recordingArticle, deleteRecord } from '../redux/action/record.action'
 
 import style from './style.less';
 
@@ -18,6 +18,7 @@ const Item = List.Item
         changeMyListVisible,
         recordingArticle,
         getArticleDetail,
+        deleteRecord,
     }
 )
 
@@ -34,9 +35,13 @@ class MyRecordsList extends React.Component {
         this.props.getArticleDetail(id)
     }
 
+    handleDeleteRecord(id) {
+        this.props.deleteRecord(id)
+            .then(res => this.props.getUserInfo())
+    }
+
     render() {
         const { records = [] } = this.props.userInfo.toJS();
-        debugger
         return (
             <div className={style.myRecordsList}>
                 <List>
@@ -44,6 +49,7 @@ class MyRecordsList extends React.Component {
                         records.reverse().map(record => {
                             return (
                                 <SwipeAction
+                                    key={record.recordId}
                                     style={{ backgroundColor: 'gray' }}
                                     autoClose
                                     right={[
@@ -54,7 +60,7 @@ class MyRecordsList extends React.Component {
                                         },
                                         {
                                             text: '删除',
-                                            onPress: () => console.log('delete'),
+                                            onPress: () => this.handleDeleteRecord(record.recordId),
                                             style: { backgroundColor: '#F4333C', color: 'white' },
                                         },
                                     ]}
