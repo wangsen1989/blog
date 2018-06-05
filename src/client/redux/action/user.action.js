@@ -1,5 +1,6 @@
 import pwdSault from "../../utils/pwdSault";
 import axiosData from "../../utils/axiosData";
+import Axios from "axios";
 
 export const LOAD_USER_INFO = 'load user info'
 
@@ -13,7 +14,7 @@ const lodUserInfo = (payload) => ({
 export const login = (opts) => {
     return dispatch => {
         const { name, password } = opts
-        axiosData('./api/login', { name, password: pwdSault(password) })
+        axiosData('/api/login', { name, password: pwdSault(password) })
             .then(res => {
                 dispatch(lodUserInfo(res.data))
             })
@@ -26,7 +27,7 @@ export const login = (opts) => {
 
 export const getUserInfo = () => {
     return dispatch => {
-        return axiosData('./api/userInfo')
+        return axiosData('/api/userInfo')
             .then(res => {
                 const { data = {} } = res
                 dispatch(lodUserInfo(data))
@@ -44,6 +45,25 @@ export const logOut = () => {
         dispatch({
             type: LOGOUT,
         })
+    }
+}
+
+export const upLoadFile = (file) => {
+    return dispatch => {
+        const formData = new FormData()
+        formData.append('avatar', file)
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+        return Axios.post('/api/upLoadFile', formData, config)
+            .then(res => {
+                console.log(res)
+            })
+        // dispatch({
+        //     type: LOGOUT,
+        // })
     }
 }
 
