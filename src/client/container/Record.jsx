@@ -8,7 +8,7 @@ const Item = List.Item
 import AddRecord from '../components/AddRecord'
 import MyRecordsList from '../components/MyRecordsList'
 
-import { changeMyListVisible } from '../redux/action/record.action'
+import { changeMyListVisible, recordingArticle } from '../redux/action/record.action'
 import style from './app.less'
 
 @connect(
@@ -17,7 +17,8 @@ import style from './app.less'
     userInfo: state.userReducer.get('userInfo'),
   }),
   {
-    changeMyListVisible
+    changeMyListVisible,
+    recordingArticle
   }
 )
 class Record extends React.Component {
@@ -27,6 +28,8 @@ class Record extends React.Component {
   }
   handleAddRecord() {
     this.props.changeMyListVisible(false)
+    this.props.recordingArticle({ _id: '', title:'', content: '' })
+
   }
   render() {
     const { records = [] } = this.props.userInfo.toJS();
