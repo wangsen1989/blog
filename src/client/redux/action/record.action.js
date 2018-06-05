@@ -42,9 +42,9 @@ export const getArticleDetail = (artId) => {
     }
 }
 
-export const deleteRecord = (artId) => {
+export const deleteRecord = (opts) => {
     return (dispatch, getState) => {
-        return axiosData('/api/deleteRecord', { artId })
+        return axiosData('/api/deleteRecord',  opts)
             .then(res => Promise.resolve(res))
             .catch(err => Promise.reject(err))
     }

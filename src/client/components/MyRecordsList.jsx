@@ -35,8 +35,8 @@ class MyRecordsList extends React.Component {
         this.props.getArticleDetail(id)
     }
 
-    handleDeleteRecord(id) {
-        this.props.deleteRecord(id)
+    handleDeleteRecord(opts) {
+        this.props.deleteRecord(opts)
             .then(res => this.props.getUserInfo())
     }
 
@@ -60,7 +60,7 @@ class MyRecordsList extends React.Component {
                                         },
                                         {
                                             text: '删除',
-                                            onPress: () => this.handleDeleteRecord(record.recordId),
+                                            onPress: () => this.handleDeleteRecord({ recordId: record.recordId, title: record.title }),
                                             style: { backgroundColor: '#F4333C', color: 'white' },
                                         },
                                     ]}
