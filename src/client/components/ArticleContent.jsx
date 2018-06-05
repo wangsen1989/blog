@@ -2,11 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
 import { Modal, Card, List, TextareaItem, Button, WhiteSpace } from 'antd-mobile';
+import moment from 'moment'
 
 import { changeArtModal, storeComment, submitComment } from '../redux/action/article.action'
 import style from './style.less'
 import { Item } from 'antd-mobile/lib/tab-bar';
-
 
 @connect(
     state => ({
@@ -24,54 +24,49 @@ import { Item } from 'antd-mobile/lib/tab-bar';
 class ArticleContent extends React.Component {
 
     render() {
-        const { title = '', content = '', comments = [], _id = '' } = this.props.$$articleDetail.toJS()
+        debugger
+        const { title = '', content = '', comments = [], _id = '', username, createTime } = this.props.$$articleDetail.toJS()
         return (
             <Modal
                 className={style.artModal}
                 visible={this.props.modalVisible}
                 transparent
-                title={title}
+                title={<span className={style.artTitle}>{title}</span>}
             >
-
+                <p className={style.artTip}>
+                <span className={style.artAuthor}>作者：{username}</span>
+                <span className={style.artDate}>{moment(Number(createTime)).format('YYYY-MM-DD')}</span>
+                </p>
+                <pre className={style.artContent}>{content}</pre>
+                <WhiteSpace />
+                <Card>
+                    <Card.Header
+                        title={<span className={style.commentsHeader}>评论区</span>}
+                    />
+                    <Card.Body>
+                        {comments.map((com, index) => {
+                            return (
+                                <div className={style.comment} key={index}>
+                                    <div className={style.commentName}>
+                                        <Item>{com.username}:</Item>
+                                    </div>
+                                    <pre className={style.commentContent}>{com.comment}</pre>
+                                </div>
+                            )
+                        })}
+                    </Card.Body>
+                </Card>
+                <WhiteSpace />
                 <Card>
                     <Card.Body>
                         <TextareaItem
-                            value={content}
-                            autoHeight
-                            editable={false}
+                            value={this.props.comment}
+                            placeholder='说点什么吧'
+                            onChange={val => this.props.storeComment(val)}
+                            rows={5}
                         />
                     </Card.Body>
                 </Card>
-
-                <div className={style.commentsHeader}>评论区</div>
-                <WhiteSpace />
-
-                <List>
-                    {comments.map((com, index) => {
-                        return (
-                            <div className={style.comment} key={index}>
-                                <div className={style.commentName}>
-                                    <Item>{com.username}:</Item>
-                                </div>
-                                <div className={style.commentContent}>
-                                    <TextareaItem
-                                        value={com.comment}
-                                        autoHeight
-                                        editable={false}
-                                    />
-                                </div>
-                            </div>
-                        )
-                    })}
-                </List>
-                <List>
-                    <TextareaItem
-                        value={this.props.comment}
-                        placeholder='说点什么吧'
-                        onChange={val => this.props.storeComment(val)}
-                        rows={5}
-                    />
-                </List>
                 <Button
                     type="primary"
                     onClick={() => {
@@ -83,6 +78,7 @@ class ArticleContent extends React.Component {
                             })
                     }}
                 >评论</Button>
+
             </Modal>
         )
     }
