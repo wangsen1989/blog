@@ -47,7 +47,7 @@ class ArticleContent extends React.Component {
                 <WhiteSpace />
 
                 <List>
-                    {comments.reverse().map(com => {
+                    {comments.map(com => {
                         return (
                             <div className={style.comment}>
                                 <div className={style.commentName}>
