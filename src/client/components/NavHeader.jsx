@@ -25,8 +25,8 @@ class NavHeader extends React.Component {
         const { modalVisible, listVisibel } = this.props
         console.log({ modalVisible, listVisibel })
         const { pathname = '/' } = this.props.location
-        const name = pathname === '/' ? '文章' :
-            pathname === '/record' ? '记录' :
+        const name = pathname === '/' ? '阅读' :
+            pathname === '/record' ? '写作' :
                 pathname === '/user' ? '我' : ''
 
         const otherProps = {}

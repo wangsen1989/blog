@@ -36,10 +36,10 @@ class UserInfo extends React.Component {
         return (
             <List>
                 <Item extra={name}>账号</Item>
-                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>关注</Item>
-                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item>
-                <Item extra={records.length || 0} arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item>
-                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>我的评价</Item>
+                {/* <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>关注</Item>
+                <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>收藏</Item> */}
+                {/* <Item extra={records.length || 0} arrow="horizontal" multipleLine onClick={() => { }}>我的记录</Item> */}
+                {/* <Item extra={0} arrow="horizontal" multipleLine onClick={() => { }}>我的评价</Item> */}
                 <WhiteSpace />
                 <Button
                     type="primary"

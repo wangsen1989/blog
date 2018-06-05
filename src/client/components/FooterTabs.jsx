@@ -17,7 +17,7 @@ class FooterTabs extends React.Component {
           <TabBar.Item
             icon={{ uri: require('./assets/images/article_unselect.png') }}
             selectedIcon={{ uri: require('./assets/images/article_select.png') }}
-            title="文章"
+            title="阅读"
             key="article"
             selected={pathname === '/'}
             onPress={() => {
@@ -27,7 +27,7 @@ class FooterTabs extends React.Component {
           <TabBar.Item
             icon={{ uri: require('./assets/images/record_unselect.png') }}
             selectedIcon={{ uri: require('./assets/images/record_select.png') }}
-            title="记录"
+            title="写作"
             key="record"
             selected={pathname === '/record'}
             onPress={() => {
