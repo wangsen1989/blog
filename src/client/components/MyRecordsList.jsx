@@ -54,11 +54,6 @@ class MyRecordsList extends React.Component {
                                     autoClose
                                     right={[
                                         {
-                                            text: '编辑',
-                                            onPress: () => this.handleEditRecord(record.recordId),
-                                            style: { backgroundColor: '#ddd', color: 'white' },
-                                        },
-                                        {
                                             text: '删除',
                                             onPress: () => this.handleDeleteRecord({ recordId: record.recordId, title: record.title }),
                                             style: { backgroundColor: '#F4333C', color: 'white' },
@@ -69,9 +64,10 @@ class MyRecordsList extends React.Component {
                                 >
                                     <Item
                                         key={record.recordId}
+                                        extra="More"
                                         arrow="horizontal"
                                         multipleLine
-                                        onClick={() => { console.log(record) }}
+                                        onClick={() => this.handleEditRecord(record.recordId)}
                                     >{record.title}</Item>
                                 </SwipeAction>
                             )
