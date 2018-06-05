@@ -24,7 +24,6 @@ import { Item } from 'antd-mobile/lib/tab-bar';
 class ArticleContent extends React.Component {
 
     render() {
-        debugger
         const { title = '', content = '', comments = [], _id = '', username, createTime } = this.props.$$articleDetail.toJS()
         return (
             <Modal
