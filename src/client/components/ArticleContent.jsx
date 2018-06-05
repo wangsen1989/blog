@@ -35,15 +35,39 @@ class ArticleContent extends React.Component {
 
                 <Card>
                     <Card.Body>
-                        <div>{content}</div>
+                        <TextareaItem
+                            value={content}
+                            autoHeight
+                            editable={false}
+                        />
                     </Card.Body>
                 </Card>
 
-
                 <div className={style.commentsHeader}>评论区</div>
+                <WhiteSpace />
+
+                <List>
+                    {comments.reverse().map(com => {
+                        return (
+                            <div className={style.comment}>
+                                <div className={style.commentName}>
+                                    <Item>{com.username}:</Item>
+                                </div>
+                                <div className={style.commentContent}>
+                                    <TextareaItem
+                                        value={com.comment}
+                                        autoHeight
+                                        editable={false}
+                                    />
+                                </div>
+                            </div>
+                        )
+                    })}
+                </List>
                 <List>
                     <TextareaItem
                         value={this.props.comment}
+                        placeholder='说点什么吧'
                         onChange={val => this.props.storeComment(val)}
                         rows={5}
                     />
@@ -59,23 +83,6 @@ class ArticleContent extends React.Component {
                             })
                     }}
                 >评论</Button>
-                <WhiteSpace />
-
-
-                <List>
-                    {comments.reverse().map(com => {
-                        return (
-                            <div className={style.comment}>
-                                <div className={style.commentName}>
-                                    <Item>{com.username}:</Item>
-                                </div>
-                                <div className={style.commentContent}>
-                                    <Item>{com.comment}</Item>
-                                </div>
-                            </div>
-                        )
-                    })}
-                </List>
             </Modal>
         )
     }
