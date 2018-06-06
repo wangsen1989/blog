@@ -16,6 +16,9 @@ app.use(cookieParser())
 // 静态资源：首页html， css，script，image
 app.use(express.static(path.join(__dirname, '../../dist')))
 
+// 用户头像存放地，建在blog项目平级的目录：imageserver目录
+app.use('/imageserver', express.static(path.join(__dirname, '../../../imageserver')));
+
 app.use((req, res, next) => {
     console.log(req)
     // 前端browserRouter路由  /record， /user，返回html文件，不校验登录态

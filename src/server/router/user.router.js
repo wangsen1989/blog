@@ -53,20 +53,23 @@ const userRouter = (Router) => {
 
     Router.post('/upLoadFile', (req, res) => {
         let { userid = '' } = req.cookies;
+        req.require
         var form = new multiparty.Form();
         form.encoding = 'utf-8';
-        form.uploadDir = path.join(__dirname, '../upLoadFile')
+        form.uploadDir = path.join(__dirname, '../../../../imageserver/static')
         form.parse(req, function (err, fields, files) {
             if (err) {
                 res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
             } else {
-                const { path } = files.avatar[0]
-                User.update({ _id: userid }, { $set: { 'avatar': path, } }, { upsert: true, strict: false }, (err, doc) => {
+                const { path: _path } = files.avatar[0]
+                const imageRoot = path.join(__dirname, '../../../../')
+                const imagePath = _path.split(imageRoot)[1]
+                User.update({ _id: userid }, { $set: { 'avatar': imagePath, } }, { upsert: true, strict: false }, (err, doc) => {
                     if (err) {
                         res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
                     }
                     else {
-                        res.json({ code: '000', data: doc })
+                        res.json({ code: '000', data: { 'avatar': imagePath, } })
                     }
                 })
             }
