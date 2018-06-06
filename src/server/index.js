@@ -34,9 +34,9 @@ app.use((req, res, next) => {
     } else {
         const { accessToken, userid, username } = req.cookies
         // 校验登录态
-        if (!username || util.secretSault(userid) !== accessToken) {
+        if (!userid || util.secretSault(userid) !== accessToken) {
             // return res.redirect('/user')
-            return res.json({ code: '002', message: 'token身份失效，请重新登录' })
+            return res.json({ code: '002', message: '请登录后使用' })
         }
         // 校验通过，走
         next()
