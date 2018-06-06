@@ -33,8 +33,8 @@ class ArticleContent extends React.Component {
                 title={<span className={style.artTitle}>{title}</span>}
             >
                 <p className={style.artTip}>
-                <span className={style.artAuthor}>作者：{username}</span>
-                <span className={style.artDate}>{moment(Number(createTime)).format('YYYY-MM-DD')}</span>
+                    <span className={style.artAuthor}>作者：{username}</span>
+                    <span className={style.artDate}>{!createTime ? '' : moment(Number(createTime)).format('YYYY-MM-DD')}</span>
                 </p>
                 <pre className={style.artContent}>{content}</pre>
                 <WhiteSpace />
