@@ -17,6 +17,11 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../../dist')))
 
 // 用户头像存放地，建在blog项目平级的目录：imageserver目录
+const imagesDir = path.join(__dirname, '../../../imageserver/static')
+if (!fs.existsSync(imagesDir)) {
+    fs.mkdirSync(imagesDir)
+    console.log("文件目录不存在，已为您自动创建目录:" + imagesDir)
+}
 app.use('/imageserver', express.static(path.join(__dirname, '../../../imageserver')));
 
 app.use((req, res, next) => {
