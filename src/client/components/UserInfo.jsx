@@ -47,6 +47,9 @@ class UserInfo extends React.Component {
         this.setState({ files });
         if (files.length > 0) {
             this.props.upLoadFile(files[0].file)
+                .then(res => {
+                    this.props.getUserInfo()
+                })
         }
     }
 

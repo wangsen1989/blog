@@ -59,8 +59,13 @@ export const upLoadFile = (file) => {
         }
         return Axios.post('/api/upLoadFile', formData, config)
             .then(res => {
-                console.log(res)
-            })
+                if (res.data.code = '000') {
+                    console.log(res.data.data)
+                    return Promise.resolve(res.data.data)
+                } else {
+                    return Promise.reject(res.data.data)
+                }
+            }).catch(err => Promise.reject(err))
         // dispatch({
         //     type: LOGOUT,
         // })
