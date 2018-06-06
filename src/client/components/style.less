@@ -50,3 +50,26 @@
     color: @contentGray;
     white-space: pre-wrap;
 }
+
+.avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-position: center;
+}
+.avatarPicker{
+    :global{
+        .am-flexbox-item{
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+}
+.avatarText{
+    text-align: center;
+    color: @contentGray;
+}

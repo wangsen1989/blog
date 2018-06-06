@@ -5,7 +5,7 @@ const $$initialState = Immutable.fromJS({
     loginStatus: false,
     userInfo: {
         name: '',
-        record: []
+        records: []
     }
 })
 

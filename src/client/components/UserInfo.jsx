@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Button, List, WhiteSpace, ImagePicker } from 'antd-mobile';
 import cookie from 'react-cookies'
 import { logOut, getUserInfo, upLoadFile } from '../redux/action/user.action';
+import style from './style.less'
 
 const Item = List.Item
 const data = [{
@@ -54,23 +55,39 @@ class UserInfo extends React.Component {
     }
 
     render() {
-        const { name = '', } = this.props.userInfo.toJS();
+        const { name = '', avatar } = this.props.userInfo.toJS();
         const { files } = this.state;
+        const avatarSrc = "http://localhost:9999/" + avatar
 
         return (
-            <List>
-                <ImagePicker
-                    files={files}
-                    onChange={this.onChange}
-                    selectable={files.length === 0}
-                />
+            <div>
+                <WhiteSpace />
+                {
+                    avatar ?
+                        <div
+                            className={style.avatar}
+                            style={{
+                                backgroundImage: 'url(' + avatarSrc + ')'
+                            }} /> :
+                        <div>
+                            <ImagePicker
+                                className={style.avatarPicker}
+                                files={files}
+                                onChange={this.onChange}
+                                selectable={files.length === 0}
+                            />
+                            <div className={style.avatarText}>选择头像</div>
+                        </div>
+                }
+                <WhiteSpace />
+                <div className={style.avatarText}>{name}</div>
                 <WhiteSpace />
                 <Button
                     type="primary"
                     onClick={this.handleLogOut}
                 >退出</Button>
 
-            </List>
+            </div>
         );
     }
 }
