@@ -27,14 +27,22 @@ class UserInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            files: [],
+            avatar: false,
         }
         this.handleLogOut = this.handleLogOut.bind(this)
+        this.changeAvatar = this.changeAvatar.bind(this)
     }
     componentDidMount() {
         if (cookie.load('userid') && !this.props.loginStatus) {
             // 用户刷新操作，有cookie，但reducer登录标志丢失，需要重新拉取
             this.props.getUserInfo()
+        }
+        this.setState({ avatar: this.props.userInfo.get('avatar') })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.userInfo.get('avatar') !== nextProps.userInfo.get('avatar')) {
+            this.setState({ avatar: nextProps.userInfo.get('avatar') })
         }
     }
 
@@ -45,7 +53,6 @@ class UserInfo extends React.Component {
 
     onChange = (files, type, index) => {
         console.log(files, type, index);
-        this.setState({ files });
         if (files.length > 0) {
             this.props.upLoadFile(files[0].file)
                 .then(res => {
@@ -54,9 +61,13 @@ class UserInfo extends React.Component {
         }
     }
 
+    changeAvatar() {
+        this.setState({ avatar: false })
+    }
+
     render() {
-        const { name = '', avatar } = this.props.userInfo.toJS();
-        const { files } = this.state;
+        const { name = '', } = this.props.userInfo.toJS();
+        const { avatar } = this.state;
         const avatarSrc = "http://localhost:9999/" + avatar
 
         return (
@@ -68,15 +79,14 @@ class UserInfo extends React.Component {
                             className={style.avatar}
                             style={{
                                 backgroundImage: 'url(' + avatarSrc + ')'
-                            }} /> :
+                            }}
+                            onClick={this.changeAvatar}
+                        /> :
                         <div>
                             <ImagePicker
                                 className={style.avatarPicker}
-                                files={files}
                                 onChange={this.onChange}
-                                selectable={files.length === 0}
                             />
-                            <div className={style.avatarText}>选择头像</div>
                         </div>
                 }
                 <WhiteSpace />
