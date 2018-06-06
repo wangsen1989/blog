@@ -28,7 +28,7 @@ app.use((req, res, next) => {
     console.log(req)
     // 前端browserRouter路由  /record， /user，返回html文件，不校验登录态
     // 所有api/开头的，除了首页/api/article，登录/api/login，不校验登录态，其余都校验
-    const whiteNames = ['/record', '/user', '/api/article', '/api/login',]
+    const whiteNames = ['/record', '/user', '/api/article', '/api/articleDetail', '/api/login',]
     if (whiteNames.includes(req.path)) {
         next()
     } else {
