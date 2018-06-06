@@ -7,13 +7,8 @@ import { logOut, getUserInfo, upLoadFile } from '../redux/action/user.action';
 import style from './style.less'
 
 const Item = List.Item
-const data = [{
-    url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
-    id: '2121',
-}, {
-    url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
-    id: '2122',
-}];
+let whichVisible = ''
+
 
 @connect(
     state => ({
@@ -45,7 +40,7 @@ class UserInfo extends React.Component {
             this.setState({ avatar: nextProps.userInfo.get('avatar') })
         }
     }
-
+    
     handleLogOut() {
         cookie.remove('userid')
         this.props.logOut()
@@ -54,6 +49,7 @@ class UserInfo extends React.Component {
     onChange = (files, type, index) => {
         console.log(files, type, index);
         if (files.length > 0) {
+            whichVisible = ''
             this.props.upLoadFile(files[0].file)
                 .then(res => {
                     this.props.getUserInfo()
@@ -63,6 +59,7 @@ class UserInfo extends React.Component {
 
     changeAvatar() {
         this.setState({ avatar: false })
+        whichVisible = 'ImagePicker'
     }
 
     render() {
@@ -74,7 +71,7 @@ class UserInfo extends React.Component {
             <div>
                 <WhiteSpace />
                 {
-                    avatar ?
+                    avatar && !whichVisible ?
                         <div
                             className={style.avatar}
                             style={{
