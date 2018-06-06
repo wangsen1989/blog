@@ -103,6 +103,11 @@ module.exports = {
                 target: "http://127.0.0.1:9999",
                 changeOrigin: true,
                 // pathRewrite: { "^/api": "" }
+            },
+            "/imageserver": {
+                target: "http://127.0.0.1:9999",
+                changeOrigin: true,
+                // pathRewrite: { "^/api": "" }
             }
             // "/": "http://127.0.0.1:9999"
         },

@@ -65,7 +65,6 @@ class UserInfo extends React.Component {
     render() {
         const { name = '', } = this.props.userInfo.toJS();
         const { avatar } = this.state;
-        const avatarSrc = "http://localhost:9999/" + avatar
 
         return (
             <div>
@@ -75,7 +74,7 @@ class UserInfo extends React.Component {
                         <div
                             className={style.avatar}
                             style={{
-                                backgroundImage: 'url(' + avatarSrc + ')'
+                                backgroundImage: 'url(' + avatar + ')'
                             }}
                             onClick={this.changeAvatar}
                         /> :
