@@ -48,7 +48,7 @@ class NavHeader extends React.Component {
                     mode="dark"
                     {...otherProps}
                     rightContent={[
-                        <Icon key="0" type="ellipsis" onClick={() => console.log('onrightContentClick')} />,
+                        // <Icon key="0" type="ellipsis" onClick={() => console.log('onrightContentClick')} />,
                     ]}
                 >{name}</NavBar>
             </div>
