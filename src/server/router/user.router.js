@@ -15,7 +15,7 @@ const userRouter = (Router) => {
         const md5Pwd = utils.secretSault(password);
         User.findOne({ name, password: md5Pwd }, utils.responseFilter, (err, doc) => {
             if (err) {
-                res.json({ code: '500', message: '服务器内部错误，请稍后重试' })
+                res.json({ code: '002', message: '执行失败，请检查填写是否合法' })
             }
             else {
                 if (doc) {
@@ -26,12 +26,16 @@ const userRouter = (Router) => {
                     res.json({ code: '000', data: doc })
                 } else {
                     User.create({ name, password: md5Pwd }, { password: 0 }, (error, document) => {
-                        const _id = document._id.toString()
-                        const { password, ...otherDoc } = document._doc
-                        res.cookie('userid', _id)
-                        res.cookie('accessToken', utils.secretSault(_id))
-                        res.cookie('username', document.name)
-                        res.json({ code: '000', data: otherDoc })
+                        if (error) {
+                            res.json({ code: '002', message: '执行失败，请检查填写是否合法' })
+                        } else {
+                            const _id = document._id.toString()
+                            const { password, ...otherDoc } = document._doc
+                            res.cookie('userid', _id)
+                            res.cookie('accessToken', utils.secretSault(_id))
+                            res.cookie('username', document.name)
+                            res.json({ code: '000', data: otherDoc })
+                        }
                     })
                 }
             }

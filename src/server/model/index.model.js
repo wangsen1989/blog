@@ -9,10 +9,10 @@ mongoose.connection.on('connected', () => {
 const models = {
     user: {
         name: {
-            type: String, require: true,
+            type: String, required: true,
         },
         password: {
-            type: String, require: true,
+            type: String, required: true,
         },
         records: {
             type: Array,
@@ -20,23 +20,31 @@ const models = {
     },
     record: {
         username: {
-            type: String, require: true,
+            type: String, required: true,
         },
         userid: {
-            type: String, require: true,
+            type: String, required: true,
         },
         title: {
-            type: String, require: true,
+            type: String, required: true,
         },
         content: {
-            type: String, require: true,
+            type: String, required: true,
         },
         createTime: {
             type: String, default: Date.now()
         },
-        comments: {
-            type: Array,
-        },
+        comments: [{
+            comment:{
+                type: String, required: true,
+            },
+            userid:{
+                type: String, required: true,
+            },
+            username:{
+                type: String, required: true,
+            },
+        }],
     }
 }
 
