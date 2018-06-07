@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = {
@@ -15,6 +16,11 @@ module.exports = {
         filename: 'script/[name].[hash].js',
         publicPath: '/', //pro
         chunkFilename: "script/[name].[chunkHash:8].chunk.js", // chunk业务包，第三方包，不是hash，必须是chunkHash，才长效缓存
+    },
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM",
+        "moment": "moment",
     },
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
@@ -104,6 +110,7 @@ module.exports = {
         new UglifyJSPlugin({
             sourceMap: false,
         }),
+        new BundleAnalyzerPlugin(),
     ],
     optimization: {
         splitChunks: {
