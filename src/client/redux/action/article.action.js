@@ -1,4 +1,5 @@
 import axiosData from "../../utils/axiosData";
+import { Toast } from 'antd-mobile';
 
 export const GET_ARTICLES = "get articles"
 export const CHANGE_ART_MODAL = "change art modal"
@@ -57,6 +58,11 @@ const storeComment = (comment) => ({
 
 const submitComment = (opts) => {
     return dispatch => {
+        const { comment } = opts
+        if (!comment) {
+            Toast.fail('执行失败，请检查填写是否合法', 1);
+            return Promise.resolve()
+        }
         return axiosData('/api/submitComment', opts)
             .then(res => Promise.resolve(res))
             .catch(err => Promise.resolve())

@@ -1,4 +1,5 @@
 import axiosData from "../../utils/axiosData";
+import { Toast } from 'antd-mobile';
 
 export const CHANGE_MY_LIST_VISIBLE = 'change my list visible'
 export const ADD_RECORD = 'add record'
@@ -16,6 +17,11 @@ export const changeMyListVisible = (opts) => {
 
 export const addRecord = (opts) => {
     return dispatch => {
+        const { title, content } = opts
+        if (!title || !content) {
+            Toast.fail('执行失败，请检查填写是否合法', 1);
+            return Promise.reject()
+        }
         return axiosData('/api/addRecord', opts)
             .then(res => {
                 return Promise.resolve(res)
@@ -44,7 +50,7 @@ export const getArticleDetail = (artId) => {
 
 export const deleteRecord = (opts) => {
     return (dispatch, getState) => {
-        return axiosData('/api/deleteRecord',  opts)
+        return axiosData('/api/deleteRecord', opts)
             .then(res => Promise.resolve(res))
             .catch(err => Promise.reject(err))
     }

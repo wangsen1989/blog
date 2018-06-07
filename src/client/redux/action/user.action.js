@@ -1,6 +1,8 @@
 import pwdSault from "../../utils/pwdSault";
 import axiosData from "../../utils/axiosData";
 import Axios from "axios";
+import { Toast } from 'antd-mobile';
+
 
 export const LOAD_USER_INFO = 'load user info'
 
@@ -14,6 +16,10 @@ const lodUserInfo = (payload) => ({
 export const login = (opts) => {
     return dispatch => {
         const { name, password } = opts
+        if(!name||!password){
+            Toast.fail('执行失败，请检查填写是否合法', 1);
+            return;
+        }
         axiosData('/api/login', { name, password: pwdSault(password) })
             .then(res => {
                 dispatch(lodUserInfo(res.data))
