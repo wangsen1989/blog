@@ -30,13 +30,7 @@ const userRouter = (Router) => {
                             res.json({ code: '002', message: '执行失败，请检查填写是否合法' })
                         } else {
                             const _id = document._id.toString()
-                            // const { password, ...otherDoc } = document._doc
-                            const otherDoc = {}
-                            Object.keys(document._doc).forEach(k => {
-                                if (k !== 'password') {
-                                    otherDoc[k] = document._doc[k]
-                                }
-                            })
+                            const { password, ...otherDoc } = document._doc
                             res.cookie('userid', _id)
                             res.cookie('accessToken', utils.secretSault(_id))
                             res.cookie('username', document.name)

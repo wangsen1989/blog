@@ -6,8 +6,7 @@
   "scripts": {
     "client": "cross-env NODE_ENV=development webpack-dev-server --mode development  --config ./webpack.dev.conf.js",
     "server": "cross-env BABEL_ENV=node NODE_ENV=development nodemon --exec babel-node src/server/index.js",
-    "debug:server": "cross-env BABEL_ENV=node NODE_ENV=development nodemon -w src/server --exec babel-node --harmony --ignore node_modules --inspect src/server",
-    "build": "rm -rf ./dist && webpack --progress --mode development --config ./webpack.pro.conf.js"
+    "build": "rm -rf ./dist && webpack --progress --mode production --config ./webpack.pro.conf.js"
   },
   "author": "",
   "license": "ISC",
