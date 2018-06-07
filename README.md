@@ -24,22 +24,26 @@
 
 ### 首次打开项目，需要安装依赖
 ```
-npm install
+>npm install
+```
+### 需要安装MongoDB后，并执行下面命令
+```
+>sudo mongod
 ```
 
 ### 启动前端
 ```
-npm run client
+>npm run client
 ```
 
 ### 启动后端
 ###### 用户头像存放地，建在blog项目平级的目录：imageserver目录，此目录不会随项目迭代
 ###### 若imageserver文件目录不存在，将自动创建目录,
 ```
-npm run server
+>npm run server
 ```
 
 ### 发布编译
 ```
-npm run build
+>npm run build
 ```
