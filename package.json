@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "compression": "^1.7.2",
     "react-cookies": "^0.1.0"
   },
   "devDependencies": {

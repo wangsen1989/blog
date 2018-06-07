@@ -1,6 +1,7 @@
 const fs = require('fs')
 const http = require('http')
 const path = require('path')
+var compression = require('compression')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const express = require('express')
@@ -10,6 +11,7 @@ const util = require('./utils')
 
 
 
+app.use(compression())
 app.use(bodyParser.json())
 app.use(cookieParser())
 
