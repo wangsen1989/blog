@@ -98,7 +98,7 @@ module.exports = {
         }),
         new ExtractTextPlugin({
             // filename: "css/[contenthash:8].min.css",
-            filename: "css/[name]-[contenthash:8].min.css",
+            filename: "css/[name]-[hash:8].min.css",
             allChunks: true
         }),
         new UglifyJSPlugin({
