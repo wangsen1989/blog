@@ -25,11 +25,11 @@ let scrollTop = 0
 class ArticleListView extends React.Component {
     constructor(props) {
         super(props);
-        const dataSource = new ListView.DataSource({
-            rowHasChanged: (row1, row2) => row1 !== row2,
-        });
+        // const dataSource = new ListView.DataSource({
+        //     rowHasChanged: (row1, row2) => row1 !== row2,
+        // });
         this.state = {
-            dataSource,
+            dataSource: [],
             noMore: false,
         };
 
@@ -45,22 +45,27 @@ class ArticleListView extends React.Component {
         } else {
             const articles = this.props.$$articles.toJS()
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(articles),
+                // dataSource: this.state.dataSource.cloneWithRows(articles),
+                dataSource: articles,
                 noMore: this.props.noMore,
             });
         }
-        // xx.scrollTo(0,800); // 必须使用setTimeout才生效
-        // this.timer = setTimeout(() => document.documentElement.scrollTo(0,scrollTop), 1000);
-        this.timer = setTimeout(() => this.lv.scrollTo(0, scrollTop), 1000);
 
+        ReactDOM.findDOMNode(this.ptr).addEventListener('scroll', (e) => {
+            console.log(e.target.scrollTop)
+            scrollTop = e.target.scrollTop
+        }, false)
+
+        // xx.scrollTo(0,800); // 必须使用setTimeout才生效
+        this.timer = setTimeout(() => {
+            ReactDOM.findDOMNode(this.ptr).scrollTo(0, scrollTop)
+        }, 0);
 
 
     }
 
     componentWillUnmount() {
         changeRouter = true
-        scrollTop = document.documentElement.scrollTop
-        console.log('scrollTop', scrollTop);
         this.timer && clearTimeout(this.timer);
 
     }
@@ -69,7 +74,8 @@ class ArticleListView extends React.Component {
         if (this.props.$$articles !== nextProps.$$articles) {
             const articles = nextProps.$$articles.toJS()
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(articles),
+                // dataSource: this.state.dataSource.cloneWithRows(articles),
+                dataSource: articles,
             });
         }
         if (this.props.noMore !== nextProps.noMore) {
@@ -95,23 +101,31 @@ class ArticleListView extends React.Component {
         this.props.getArticles(++pageNo)
     }
 
-    renderRow(rowData, sectionID, rowID) {
+    renderRow() {
         return (
-            <div key={rowData._id}>
-                <WingBlank size="sm">
-                    <WhiteSpace size="sm" />
-                    <Card onClick={() => {
-                        this.props.changeArtModal(true, rowData._id)
-                    }
-                    }>
-                        <Card.Body>
-                            <div>{rowData.title}</div>
-                        </Card.Body>
-                        <Card.Footer
-                            content={`${rowData.comments.length}评论`}
-                            extra={<div>{rowData.username}</div>} />
-                    </Card>
-                </WingBlank>
+            <div>
+                {
+                    this.state.dataSource.map(rowData => {
+                        return (
+                            <div key={rowData._id}>
+                                <WingBlank size="sm">
+                                    <WhiteSpace size="sm" />
+                                    <Card onClick={() => {
+                                        this.props.changeArtModal(true, rowData._id)
+                                    }
+                                    }>
+                                        <Card.Body>
+                                            <div>{rowData.title}</div>
+                                        </Card.Body>
+                                        <Card.Footer
+                                            content={`${rowData.comments.length}评论`}
+                                            extra={<div>{rowData.username}</div>} />
+                                    </Card>
+                                </WingBlank>
+                            </div>
+                        )
+                    })
+                }
             </div>
         );
     };
@@ -120,7 +134,7 @@ class ArticleListView extends React.Component {
         return (
             <div>
                 <ArticleContent />
-                <ListView
+                {/* <ListView
                     ref={el => this.lv = el}
                     dataSource={this.state.dataSource}
                     renderFooter={() => (
@@ -137,8 +151,24 @@ class ArticleListView extends React.Component {
                         refreshing={this.state.refreshing}
                         onRefresh={this.onRefresh}
                     />}
-
-                />
+                /> */}
+                <PullToRefresh
+                    damping={30}
+                    ref={el => this.ptr = el}
+                    style={{
+                        height: document.documentElement.clientHeight - 95,
+                        overflow: 'auto',
+                    }}
+                    indicator={'加载更多'}
+                    direction={'up'}
+                    refreshing={true}
+                    onRefresh={() => {
+                        console.log('刷新up。。。')
+                        this.onEndReached()
+                    }}
+                >
+                    {this.renderRow()}
+                </PullToRefresh>
             </div>
         );
     }
