@@ -154,21 +154,34 @@ class ArticleListView extends React.Component {
                 /> */}
                 <PullToRefresh
                     damping={30}
-                    ref={el => this.ptr = el}
                     style={{
                         height: document.documentElement.clientHeight - 95,
                         overflow: 'auto',
                     }}
                     indicator={'加载更多'}
-                    direction={'up'}
-                    refreshing={true}
+                    direction={'down'}
                     onRefresh={() => {
-                        console.log('刷新up。。。')
-                        this.onEndReached()
+                        this.onRefresh()
                     }}
                 >
-                    {this.renderRow()}
+                    <PullToRefresh
+                        damping={30}
+                        ref={el => this.ptr = el}
+                        style={{
+                            height: document.documentElement.clientHeight - 95,
+                            overflow: 'auto',
+                        }}
+                        indicator={'加载更多'}
+                        direction={'up'}
+                        onRefresh={() => {
+                            console.log('刷新up。。。')
+                            this.onEndReached()
+                        }}
+                    >
+                        {this.renderRow()}
+                    </PullToRefresh>
                 </PullToRefresh>
+
             </div>
         );
     }
