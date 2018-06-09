@@ -23,16 +23,6 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 include: path.join(__dirname, './src/client'),
                 loader: 'babel-loader',
-                query: {
-                    presets: ['react', 'es2015', 'stage-3'],
-                    plugins: [
-                        "transform-runtime",
-                        "react-hot-loader/babel",
-                        ["import", { libraryName: "antd-mobile", style: "css" }],
-                        "transform-decorators-legacy",
-                        "transform-class-properties",
-                    ],
-                }
             },
             {
                 test: /\.css|less$/,
@@ -96,7 +86,7 @@ module.exports = {
         contentBase: path.join(__dirname, './dist'),
         historyApiFallback: true,
         inline: true,
-        port: 8888,
+        port: 8080,
         // host: "0.0.0.0",
         proxy: {
             "/api": {
