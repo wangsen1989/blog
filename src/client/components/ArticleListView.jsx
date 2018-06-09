@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-import { WhiteSpace, Card, WingBlank, Modal, PullToRefresh } from 'antd-mobile';
+import { WhiteSpace, Card, WingBlank, Modal, PullToRefresh, Toast } from 'antd-mobile';
 // import moment from 'moment'
 import ArticleContent from './ArticleContent'
 import { getArticles, changeArtModal } from '../redux/action/article.action'
@@ -9,7 +9,8 @@ import style from './style.less'
 
 let pageNo = 0;
 let changeRouter = false
-let scrollTop = 0
+let preScrollTop = 0
+let currentScrollTop = 0
 
 @connect(
     state => ({
@@ -31,6 +32,7 @@ class ArticleListView extends React.Component {
         this.state = {
             dataSource: [],
             noMore: false,
+            goDown: false,
         };
 
         this.onRefresh = this.onRefresh.bind(this)
@@ -52,12 +54,14 @@ class ArticleListView extends React.Component {
         }
 
         ReactDOM.findDOMNode(this.ptr).addEventListener('scroll', (e) => {
-            scrollTop = e.target.scrollTop
+            preScrollTop = currentScrollTop
+            currentScrollTop = e.target.scrollTop
+            this.setState({ goDown: currentScrollTop > preScrollTop })
         }, false)
 
         // xx.scrollTo(0,800); // 必须使用setTimeout才生效
         this.timer = setTimeout(() => {
-            ReactDOM.findDOMNode(this.ptr).scrollTo(0, scrollTop)
+            ReactDOM.findDOMNode(this.ptr).scrollTo(0, currentScrollTop)
         }, 0);
 
 
@@ -66,7 +70,6 @@ class ArticleListView extends React.Component {
     componentWillUnmount() {
         changeRouter = true
         this.timer && clearTimeout(this.timer);
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,20 +84,18 @@ class ArticleListView extends React.Component {
             this.setState({
                 noMore: nextProps.noMore,
             });
+            if(nextProps.noMore){
+                Toast.info('已无更多', 1)
+            }
         }
     }
     onRefresh() {
-        this.setState({ refreshing: true });
         pageNo = 0
         this.props.getArticles(0)
-            .then(() => {
-                this.setState({
-                    refreshing: false,
-                });
-            })
     };
     onEndReached = (event) => {
         if (this.state.noMore) {
+            Toast.info('已无更多', 1)
             return;
         }
         this.props.getArticles(++pageNo)
@@ -130,6 +131,9 @@ class ArticleListView extends React.Component {
     };
 
     render() {
+        const { goDown } = this.state
+        const indicator = goDown ? { deactivate: '上拉加载更多', activate: '加载中...', finish: '加载完成' } :
+            { deactivate: '下拉重载', activate: '重载中...', finish: '重载完成' }
         return (
             <div>
                 <ArticleContent />
@@ -152,35 +156,21 @@ class ArticleListView extends React.Component {
                     />}
                 /> */}
                 <PullToRefresh
-                    damping={30}
+                    damping={50}
+                    ref={el => this.ptr = el}
                     style={{
                         height: document.documentElement.clientHeight - 95,
                         overflow: 'auto',
                     }}
-                    direction={'down'}
-                    indicator={{ deactivate: '下拉重新载入', activate: '重载中...',  finish: '重载完成' }}
+                    className={style.pullToRefresh}
+                    indicator={indicator}
+                    direction={goDown ? 'up' : 'down'}
                     onRefresh={() => {
-                        this.onRefresh()
+                        goDown ? this.onEndReached() : this.onRefresh()
                     }}
                 >
-                    <PullToRefresh
-                        damping={50}
-                        ref={el => this.ptr = el}
-                        style={{
-                            height: document.documentElement.clientHeight - 95,
-                            overflow: 'auto',
-                        }}
-                        className={style.pullToRefresh}
-                        indicator={{ deactivate: '上拉加载更多', activate: '加载中...',  finish: '加载完成' }}
-                        direction={'up'}
-                        onRefresh={() => {
-                            this.onEndReached()
-                        }}
-                    >
-                        {this.renderRow()}
-                    </PullToRefresh>
+                    {this.renderRow()}
                 </PullToRefresh>
-
             </div>
         );
     }
