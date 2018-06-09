@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from "react-redux"
-import { ListView, WhiteSpace, Card, WingBlank, Modal, PullToRefresh } from 'antd-mobile';
+import { WhiteSpace, Card, WingBlank, Modal, PullToRefresh } from 'antd-mobile';
 // import moment from 'moment'
 import ArticleContent from './ArticleContent'
 import { getArticles, changeArtModal } from '../redux/action/article.action'
@@ -52,7 +52,6 @@ class ArticleListView extends React.Component {
         }
 
         ReactDOM.findDOMNode(this.ptr).addEventListener('scroll', (e) => {
-            console.log(e.target.scrollTop)
             scrollTop = e.target.scrollTop
         }, false)
 
@@ -158,23 +157,23 @@ class ArticleListView extends React.Component {
                         height: document.documentElement.clientHeight - 95,
                         overflow: 'auto',
                     }}
-                    indicator={'加载更多'}
                     direction={'down'}
+                    indicator={{ deactivate: '下拉重新载入', activate: '重载中...',  finish: '重载完成' }}
                     onRefresh={() => {
                         this.onRefresh()
                     }}
                 >
                     <PullToRefresh
-                        damping={30}
+                        damping={50}
                         ref={el => this.ptr = el}
                         style={{
                             height: document.documentElement.clientHeight - 95,
                             overflow: 'auto',
                         }}
-                        indicator={'加载更多'}
+                        className={style.pullToRefresh}
+                        indicator={{ deactivate: '上拉加载更多', activate: '加载中...',  finish: '加载完成' }}
                         direction={'up'}
                         onRefresh={() => {
-                            console.log('刷新up。。。')
                             this.onEndReached()
                         }}
                     >
