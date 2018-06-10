@@ -1,20 +1,31 @@
 ### 目录结构
 ```
 
-|-- dist    打包目录
+|-- dist  打包目录
 ├── src
-│   └── server    后端node server代码
-│   └── client    前端代码
-│       ├── index.jsx      入口文件
-│       ├── components     基础组件
-│       ├── container      页面容器组件
-│       ├── utils          公共方法
-│       └── redux          状态管理
-│           ├── action     Action、ActionType的定义
-│           ├── reducer    业务状态处理
+│   |── client 前端代码
+│   |         |
+│   |         ├── index.jsx      前端入口文件
+│   |         ├── components     基础组件
+│   |         ├── container      页面容器组件
+│   |         ├── utils          公共方法
+│   |         └── redux          状态管理
+│   |                 ├── action     Action、ActionType的定义
+│   |                 ├── reducer    业务状态处理
+│   |
+│   |
+│   |
+|   |── server 后端node代码
+│             |
+│             ├── index.js       后端入口文件
+│             ├── model          数据库模型
+│             ├── router         后端路由
+|
+|
+|
 └── .babelrc
 └── .gitignore
-└── index.html             html模板
+└── index.html 模板
 └── package.json
 └── README.md
 └── webpack.dev.conf.js    
@@ -28,13 +39,14 @@
 ![](http://chuantu.biz/t6/327/1528619746x-1566688419.png)
 ![](http://chuantu.biz/t6/327/1528619837x-1566688419.png)
 
-### 首次打开项目，需要安装依赖
-```
->npm install
-```
 ### 需要安装MongoDB后，并执行下面命令
 ```
 >sudo mongod
+```
+
+### 首次打开项目，需要安装依赖
+```
+>npm install
 ```
 
 ### 启动前端
